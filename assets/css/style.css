@@ -1,30 +1,32 @@
 /* ==========================================================================
-   TROPICAL BEACH DESIGN SYSTEM
+   TROPICAL BEACH DESIGN SYSTEM (DUAL THEME MODE)
    ========================================================================== */
 :root {
-  /* Tropical Pastel/Sunny Colors */
-  --hue-primary: 24;      /* Tropical Sandy Gold / Coral */
-  --hue-accent: 188;      /* Ocean Water Cyan/Teal */
+  /* HSL Tailored Colors - Primary Bright Tropical Mode */
+  --hue-primary: 24;      /* Sandy Gold / Warm Coral */
+  --hue-accent: 188;      /* Ocean Water Teal/Cyan */
   --hue-wood: 30;         /* Pine Driftwood Brown */
 
-  /* Palette */
-  --bg-sky: #e0f7fa;      /* Very Light Cyan */
-  --bg-sea: #26c6da;      /* Clear Sunny Ocean Cyan */
-  --text-dark: #37474f;   /* Dark Slate Blue/Grey */
-  --text-muted: #78909c;  /* Muted Slate Grey */
-  --text-light: #ffffff;  
+  /* Palette - Light/Bright Mode */
+  --bg-sky: #e0f7fa;
+  --bg-sea: #26c6da;
+  --text-dark: #37474f;   /* Slate Slate Grey */
+  --text-muted: #78909c;
+  --text-light: #ffffff;
   
-  /* UI Gradients */
-  --gradient-sky-ocean: linear-gradient(180deg, #b2ebf2 0%, #e0f7fa 40%, #80deea 100%);
-  --gradient-tropical-sun: radial-gradient(circle, #fff9c4 10%, #ffd54f 50%, #ffb300 100%);
-  --gradient-sand: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
-  
-  /* Wood Bezel & Panel Colors */
+  /* Panel Driftwood Bezel */
   --wood-bg: #f7ede2;
   --wood-border: #cdb49e;
-  
-  /* Card Gradients */
-  --gradient-card-back: linear-gradient(135deg, #ffca28 0%, #f57c00 100%); /* Sandy Sunburst */
+  --panel-text: var(--text-dark);
+  --input-bg: #ffffff;
+  --input-text: var(--text-dark);
+  --badge-bg: #ffffff;
+
+  /* Gradients */
+  --gradient-sky-ocean: linear-gradient(180deg, #b2ebf2 0%, #e0f7fa 40%, #80deea 100%);
+  --gradient-tropical-sun: radial-gradient(circle, #fff9c4 10%, #ffd54f 50%, #ffb300 100%);
+  --gradient-sunset: linear-gradient(135deg, #ff8a65 0%, #ffb74d 100%);
+  --gradient-card-back: linear-gradient(135deg, #ffca28 0%, #f57c00 100%);
   --gradient-timer-bar: linear-gradient(to right, #4db6ac 0%, #ffd54f 60%, #ff8a65 100%);
 
   /* Semantic Colors */
@@ -32,13 +34,36 @@
   --color-success: #43a047;
   --color-timer-warning: #ff5722;
 
-  /* Shadows */
+  /* Shadows & Transitions */
   --wood-shadow: 0 16px 36px rgba(100, 75, 50, 0.18), inset 0 2px 4px rgba(255, 255, 255, 0.7);
   --card-shadow: 0 8px 16px rgba(100, 75, 50, 0.12);
-  
-  /* Transitions */
   --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   DARK FOCUS THEME - OVERRIDES FOR GAMEPLAY STATE
+   ========================================================================== */
+body.theme-dark {
+  background-color: #05060b;
+  color: #eceff1;
+  
+  /* Override variables to Dark mahogany wood settings */
+  --bg-sky: #070912;
+  --bg-sea: #101525;
+  --text-dark: #eceff1;
+  --text-muted: #90a4ae;
+  
+  --wood-bg: #1f130b;          /* Dark Mahogany Plank */
+  --wood-border: #3c2417;      /* Dark Wood Bezel */
+  --panel-text: #eceff1;
+  --input-bg: #0c0806;
+  --input-text: #ffffff;
+  --badge-bg: #140d08;
+  
+  --gradient-sky-ocean: linear-gradient(180deg, #05060a 0%, #0c0d18 50%, #121526 100%);
+  --wood-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.05);
+  --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================================
@@ -60,10 +85,11 @@ body {
   align-items: center;
   position: relative;
   background-color: var(--bg-sky);
+  transition: background-color var(--transition-slow);
 }
 
 /* ==========================================================================
-   AMBIENT BACKGROUND SCENE (TROPICAL BEACH)
+   AMBIENT BACKGROUND SCENE
    ========================================================================== */
 .app-background {
   position: absolute;
@@ -74,6 +100,7 @@ body {
   z-index: -1;
   overflow: hidden;
   background: var(--gradient-sky-ocean);
+  transition: background var(--transition-slow);
 }
 
 .tropical-sun {
@@ -87,6 +114,12 @@ body {
   opacity: 0.7;
   filter: blur(25px);
   animation: pulseSun 8s ease-in-out infinite alternate;
+  transition: opacity var(--transition-slow);
+}
+
+/* Hide sun in dark focus theme */
+body.theme-dark .tropical-sun {
+  opacity: 0.05;
 }
 
 @keyframes pulseSun {
@@ -102,6 +135,11 @@ body {
   background: rgba(38, 198, 218, 0.25);
   filter: blur(40px);
   pointer-events: none;
+  transition: background var(--transition-slow), opacity var(--transition-slow);
+}
+
+body.theme-dark .sea-wave {
+  background: rgba(0, 188, 212, 0.03);
 }
 
 .sea-wave--1 {
@@ -115,17 +153,21 @@ body {
   animation: waveMotion 10s ease-in-out infinite alternate-reverse;
 }
 
+body.theme-dark .sea-wave--2 {
+  background: rgba(0, 150, 136, 0.02);
+}
+
 @keyframes waveMotion {
   0% { transform: translate(-5%, 20px) rotate(0deg); }
   100% { transform: translate(0%, -10px) rotate(2deg); }
 }
 
 /* ==========================================================================
-   CONTAINERS & WOOD PANELS (BEACH SHACK STYLED)
+   CONTAINERS & WOOD PANELS (DYNAMIC PLANK GROOVES)
    ========================================================================== */
 .app-container {
   width: 100%;
-  max-width: 680px;
+  max-width: 760px; /* Marginally wider to support travel brochure columns density */
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -149,28 +191,33 @@ body {
   pointer-events: auto;
 }
 
-/* Wood Board Panel look */
 .wood-panel {
   background-color: var(--wood-bg);
   /* Pine wood horizontal plank pattern */
   background-image: repeating-linear-gradient(
     0deg,
-    rgba(215, 185, 155, 0.15),
-    rgba(215, 185, 155, 0.15) 1px,
+    rgba(215, 185, 155, 0.12),
+    rgba(215, 185, 155, 0.12) 1px,
     transparent 1px,
     transparent 38px
   );
   border: 8px solid var(--wood-border);
   border-radius: 24px;
   box-shadow: var(--wood-shadow);
-  padding: 40px;
+  padding: 35px;
   width: 100%;
   position: relative;
-  transition: transform var(--transition-normal);
+  transition: background-color var(--transition-slow), border var(--transition-slow), box-shadow var(--transition-slow);
 }
 
-.wood-panel:hover {
-  transform: translateY(-2px);
+body.theme-dark .wood-panel {
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.3) 1px,
+    transparent 1px,
+    transparent 38px
+  );
 }
 
 /* ==========================================================================
@@ -197,8 +244,13 @@ body {
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 8px;
-  color: #c77c3d; /* Sandy warm color */
+  color: #c77c3d; /* Sandy gold */
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-dark .welcome-card__title {
+  color: #e5a975;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .welcome-card__subtitle {
@@ -232,24 +284,28 @@ body {
 
 .input-field {
   width: 100%;
-  background: #ffffff;
+  background: var(--input-bg);
   border: 2px solid var(--wood-border);
   border-radius: 12px;
   padding: 16px 20px;
   font-size: 1.05rem;
   font-family: inherit;
-  color: var(--text-dark);
+  color: var(--input-text);
   outline: none;
   transition: var(--transition-normal);
 }
 
 .input-field::placeholder {
-  color: #b0bec5;
+  color: #90a4ae;
+}
+
+body.theme-dark .input-field::placeholder {
+  color: #546e7a;
 }
 
 .input-field:focus {
   border-color: #00acc1;
-  box-shadow: 0 0 10px rgba(0, 172, 193, 0.15);
+  box-shadow: 0 0 10px rgba(0, 172, 193, 0.25);
 }
 
 .error-msg {
@@ -305,14 +361,14 @@ body {
 }
 
 .btn--secondary {
-  background: #ffffff;
+  background: var(--input-bg);
   border: 2px solid var(--wood-border);
-  color: var(--text-dark);
+  color: var(--panel-text);
 }
 
 .btn--secondary:hover {
-  background: #faf8f5;
-  border-color: #78909c;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--text-muted);
   transform: translateY(-1px);
 }
 
@@ -327,7 +383,7 @@ body {
 }
 
 /* ==========================================================================
-   SCREEN 2: GAMEPLAY
+   SCREEN 2: GAMEPLAY SCREEN
    ========================================================================== */
 .game-card {
   padding: 30px;
@@ -339,7 +395,7 @@ body {
   align-items: center;
   margin-bottom: 15px;
   padding-bottom: 15px;
-  border-bottom: 2px solid rgba(205, 180, 158, 0.4);
+  border-bottom: 2px solid rgba(205, 180, 158, 0.2);
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -347,12 +403,16 @@ body {
 .game-header__greeting {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--text-dark);
+  color: var(--panel-text);
 }
 
 .highlight {
-  color: #c77c3d; /* warm sand */
+  color: #e5a975;
   font-weight: 800;
+}
+
+body:not(.theme-dark) .highlight {
+  color: #c77c3d;
 }
 
 .game-stats {
@@ -361,7 +421,7 @@ body {
 }
 
 .stat-badge {
-  background: #ffffff;
+  background: var(--badge-bg);
   border: 1.5px solid var(--wood-border);
   padding: 6px 12px;
   border-radius: 10px;
@@ -376,14 +436,18 @@ body {
 }
 
 .stat-badge__val {
-  color: var(--text-dark);
+  color: var(--panel-text);
 }
 
 .stat-badge--timer.is-warning {
   border-color: var(--color-timer-warning);
-  background: #fbe9e7;
+  background: #2c1611;
   color: var(--color-timer-warning);
   animation: textFlash 0.5s alternate infinite;
+}
+
+body:not(.theme-dark) .stat-badge--timer.is-warning {
+  background: #fbe9e7;
 }
 
 .stat-badge--timer.is-warning .stat-badge__val {
@@ -395,21 +459,24 @@ body {
   100% { opacity: 1; }
 }
 
-/* Timer progress bar styles */
 .timer-bar-container {
   width: 100%;
   height: 8px;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 20px;
+}
+
+body:not(.theme-dark) .timer-bar-container {
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .timer-bar {
   height: 100%;
   width: 100%;
   background: var(--gradient-timer-bar);
-  transition: width 0.1s linear; /* Smooth micro transitions */
+  transition: width 0.1s linear;
 }
 
 .board-wrapper {
@@ -448,7 +515,6 @@ body {
   border-radius: 16px;
 }
 
-/* Active Flip State */
 .card.is-flipped .card__inner {
   transform: rotateY(180deg);
 }
@@ -470,7 +536,7 @@ body {
   transition: var(--transition-normal);
 }
 
-/* Card Back (Sandy Summer Wave Pattern) */
+/* Card Back (Ocean theme) */
 .card__face--back {
   background: var(--gradient-card-back);
   color: #fff;
@@ -483,7 +549,6 @@ body {
   transition: var(--transition-normal);
 }
 
-/* Hover scales and tilts */
 .card:hover .card__inner {
   transform: translateY(-4px);
 }
@@ -497,10 +562,6 @@ body {
   box-shadow: 0 8px 20px rgba(245, 124, 0, 0.3);
 }
 
-.card:not(.is-flipped):hover .card__face--back::before {
-  transform: scale(1.15) rotate(5deg);
-}
-
 /* Card Front Design */
 .card__face--front {
   background: #ffffff;
@@ -510,12 +571,21 @@ body {
   user-select: none;
 }
 
+body.theme-dark .card__face--front {
+  background: #141b22;
+  border-color: #26c6da;
+}
+
 /* Matched Card styling */
 .card.is-matched .card__face--front {
   border-color: var(--color-success);
   background: #e8f5e9;
   box-shadow: 0 0 12px rgba(67, 160, 71, 0.25);
   animation: matchPulse 0.5s ease-in-out;
+}
+
+body.theme-dark .card.is-matched .card__face--front {
+  background: #112818;
 }
 
 @keyframes matchPulse {
@@ -531,14 +601,14 @@ body {
 }
 
 /* ==========================================================================
-   SCREEN 3: VICTORY & POSTCARD ITINERARY
+   SCREEN 3: VICTORY & TRAVEL BROCHURE POSTCARD OVERHAUL
    ========================================================================== */
 .victory-card {
   text-align: center;
 }
 
 .victory-card__header {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .victory-card__badge {
@@ -556,9 +626,19 @@ body {
 .victory-card__title {
   font-size: 2.25rem;
   font-weight: 800;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #c77c3d;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  letter-spacing: -0.5px;
+}
+
+.victory-card__subtitle-main {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #00acc1;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
 .victory-card__congrats {
@@ -568,129 +648,295 @@ body {
   line-height: 1.4;
 }
 
-/* Postcard Design (Cream cardstock with stamps) */
+/* Entry Animation for Postcard ticket reveal (1.2s smooth reveal) */
+@keyframes fadeInUpReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.screen--active .postcard {
+  animation: fadeInUpReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Travel Postcard Brochure Grid */
 .postcard {
   position: relative;
   display: flex;
-  background: #fffdf5;
-  border: 3px solid #e2d2c2;
+  background: #fffdf6;
+  border: 3px solid #e0d2c2;
   border-radius: 16px;
   margin: 20px 0 10px 0;
-  box-shadow: 0 10px 25px rgba(100, 80, 60, 0.12);
+  box-shadow: 0 16px 40px rgba(100, 75, 50, 0.15);
   text-align: left;
-  overflow: visible; /* Let notches overlap border */
+  overflow: visible; /* Needed for notches */
+  opacity: 0; /* Animated in via keyframes */
 }
 
+/* Columns divider line */
+.postcard__divider {
+  width: 0;
+  border-left: 2px dashed #d7ccc8;
+  margin: 20px 0;
+  position: relative;
+}
+
+/* Left Column - Details & Voucher */
 .postcard__left {
-  flex: 1.3;
-  padding: 24px;
+  flex: 1.2;
+  padding: 30px 24px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.postcard__title {
+.postcard__section-title {
   font-size: 0.95rem;
   font-weight: 800;
   color: #8d6e63;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 18px;
   border-bottom: 2px solid #efebe9;
   padding-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-.postcard__details {
+/* Voucher block container */
+.postcard__voucher {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(224, 210, 194, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.postcard__voucher-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+}
+
+.voucher-label {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.voucher-value {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.voucher-value--highlight {
+  color: #00acc1;
+  font-weight: 800;
+}
+
+/* Services Grids info boxes */
+.postcard__services-grid {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.postcard__row {
+.service-box {
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
+  background: rgba(0, 172, 193, 0.04);
+  border: 1px solid rgba(0, 172, 193, 0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.service-box__icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  display: flex;
   align-items: center;
-  padding-bottom: 8px;
-  border-bottom: 1px dashed #efebe9;
 }
 
-.postcard__row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.postcard__label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.postcard__value {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-dark);
-}
-
-.postcard__value--highlight {
-  color: #00acc1;
-  font-weight: 800;
-}
-
-/* Postcard dashed crease line divider */
-.postcard__divider {
-  width: 0;
-  border-left: 2px dashed #d7ccc8;
-  margin: 15px 0;
-  position: relative;
-}
-
-.postcard__right {
-  flex: 1;
-  padding: 24px;
+.service-box__content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  background: #faf8f0;
+  gap: 2px;
+}
+
+.service-box__title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #00838f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.service-box__desc {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #546e7a;
+  line-height: 1.4;
+}
+
+/* Right Column - Itinerary & Photos */
+.postcard__right {
+  flex: 1.1;
+  padding: 30px 30px 30px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #FAF8F2;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
-/* Postage stamp placeholder styling */
-.postcard__stamp {
-  width: 70px;
-  height: 85px;
-  border: 2px dashed #bcaaa4;
-  background: #ffffff;
-  padding: 5px;
+/* Mini Itinerary Timeline layout */
+.postcard__timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  padding-left: 8px;
+}
+
+/* Vertical line connection */
+.postcard__timeline::before {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 15px;
+  bottom: 15px;
+  width: 1.5px;
+  border-left: 1.5px dashed #cfd8dc;
+  z-index: 1;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-badge {
+  background: var(--gradient-sunset);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 0.72rem;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(255, 112, 67, 0.25);
+}
+
+.timeline-content {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #5d4037;
+  line-height: 1.4;
+  padding-top: 4px;
+}
+
+/* Stamp & Polaroid Photo area */
+.postcard__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  gap: 15px;
+}
+
+/* Polaroid Collage */
+.polaroid-collage {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 5px;
+}
+
+.photo-polaroid {
+  background: #ffffff;
+  border: 1px solid #e0d8cf;
+  padding: 6px 6px 14px 6px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px;
+  transition: transform var(--transition-normal);
+}
+
+.photo-polaroid:hover {
+  transform: scale(1.08) rotate(0deg) !important;
+  z-index: 10;
+}
+
+.photo-polaroid--1 {
+  transform: rotate(-4deg);
+}
+
+.photo-polaroid--2 {
   transform: rotate(4deg);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  margin-bottom: 15px;
+  margin-left: -6px;
+}
+
+.photo-polaroid__image {
+  width: 68px;
+  height: 56px;
+  background: #eceff1;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   position: relative;
 }
 
-.stamp-emoji {
-  font-size: 2.2rem;
+.photo-placeholder-icon {
+  font-size: 1.25rem;
+  color: #cfd8dc;
 }
 
-.postcard__note {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #5d4037;
-  font-style: italic;
-  font-weight: 600;
-}
-
-.postcard__signature {
-  align-self: flex-end;
-  font-size: 0.7rem;
+.photo-polaroid__caption {
+  font-size: 0.58rem;
   font-weight: 800;
-  color: #8d6e63;
-  letter-spacing: 1px;
+  color: #b0bec5;
+  margin-top: 6px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Notches (Fakes transparency punches by matching the wood bg color) */
+/* Postage stamp style */
+.postcard__stamp {
+  width: 60px;
+  height: 72px;
+  border: 2px dashed #bcaaa4;
+  background: #ffffff;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(5deg);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.stamp-emoji {
+  font-size: 2rem;
+}
+
+/* Semicircular notches along fold crease */
 .postcard__cutout {
   position: absolute;
   width: 24px;
@@ -698,12 +944,13 @@ body {
   background: var(--wood-bg);
   border-radius: 50%;
   z-index: 5;
+  transition: background var(--transition-slow);
 }
 
 .postcard__cutout--top {
   top: -13px;
-  left: calc(54.3% - 12px); /* Centered at divider line */
-  border: 3px solid #e2d2c2;
+  left: calc(52% - 12px); /* Centered directly on divider line */
+  border: 3px solid #e0d2c2;
   border-top-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -712,8 +959,8 @@ body {
 
 .postcard__cutout--bottom {
   bottom: -13px;
-  left: calc(54.3% - 12px);
-  border: 3px solid #e2d2c2;
+  left: calc(52% - 12px);
+  border: 3px solid #e0d2c2;
   border-bottom-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
@@ -750,16 +997,16 @@ body {
   font-size: 1.05rem;
   line-height: 1.6;
   font-weight: 600;
-  color: var(--text-dark);
+  color: var(--panel-text);
   margin-bottom: 30px;
 }
 
 /* ==========================================================================
    RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .wood-panel {
-    padding: 30px 20px;
+    padding: 24px 18px;
   }
   
   .welcome-card__title {
@@ -777,7 +1024,7 @@ body {
 
   .game-board {
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+    gap: 8px;
   }
   
   .card__face--front {
@@ -792,11 +1039,7 @@ body {
     font-size: 1.8rem;
   }
 
-  .victory-card__congrats {
-    font-size: 0.95rem;
-  }
-
-  /* Postcard mobile stacking layout */
+  /* Postcard mobile layout - stacks vertically */
   .postcard {
     flex-direction: column;
   }
@@ -809,41 +1052,29 @@ body {
     margin: 0;
   }
 
+  .postcard__left {
+    width: 100%;
+    padding: 20px 20px 15px 20px;
+  }
+
   .postcard__right {
     width: 100%;
     border-top-right-radius: 0;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    padding: 16px 24px;
-    flex-direction: row;
-    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .postcard__footer {
+    margin-top: 15px;
     align-items: center;
-  }
-
-  .postcard__stamp {
-    width: 50px;
-    height: 60px;
-    margin-bottom: 0;
-  }
-
-  .stamp-emoji {
-    font-size: 1.5rem;
-  }
-
-  .postcard__note {
-    font-size: 0.85rem;
-    text-align: left;
-  }
-
-  .postcard__signature {
-    align-self: center;
   }
 
   /* Reposition cutouts to vertical fold crease on the left/right edges */
   .postcard__cutout--top {
     left: -13px;
     top: calc(50% - 12px); /* Align centered with horizontal fold */
-    border: 3px solid #e2d2c2;
+    border: 3px solid #e0d2c2;
     border-top-color: transparent;
     border-left-color: transparent;
     transform: rotate(45deg);
@@ -853,7 +1084,7 @@ body {
     right: -13px;
     left: auto;
     top: calc(50% - 12px);
-    border: 3px solid #e2d2c2;
+    border: 3px solid #e0d2c2;
     border-bottom-color: transparent;
     border-right-color: transparent;
     transform: rotate(45deg);
@@ -862,7 +1093,6 @@ body {
 
 @media (max-width: 480px) {
   .game-board {
-    /* Auto layout shifts to 2x4 on very small screens to fit space better */
     grid-template-columns: repeat(2, 1fr);
     aspect-ratio: 2 / 4;
     gap: 12px;

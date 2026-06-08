@@ -11,7 +11,7 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="theme-dark"> <!-- Default gameplay starts in dark theme -->
   <div class="app-background">
     <!-- Tropical Sun and Sea waves styling elements -->
     <div class="tropical-sun"></div>
@@ -89,61 +89,117 @@
       </div>
     </section>
 
-    <!-- Screen 3: Victory Screen (Tropical Postcard) -->
+    <!-- Screen 3: Victory Screen (Enriched Travel Brochure Postcard) -->
     <section id="victory-screen" class="screen">
       <div class="wood-panel victory-card">
         <div class="victory-card__header">
           <div class="victory-card__badge">🏆</div>
-          <h2 class="victory-card__title">Chiến Thắng!</h2>
+          <h2 class="victory-card__title">CHỨNG NHẬN PHẦN THƯỞNG</h2>
+          <h3 class="victory-card__subtitle-main">KỲ NGHỈ HÈ RỰC RỠ</h3>
           <p class="victory-card__congrats">
             Chúc mừng <span id="winner-display" class="highlight"></span>! Đây là phần thưởng của bạn:
           </p>
         </div>
 
-        <!-- Postcard Design -->
+        <!-- Travel Brochure Postcard -->
         <div class="postcard">
-          <!-- Postcard cutout notches -->
+          <!-- Circular cutouts for crease fold visual -->
           <div class="postcard__cutout postcard__cutout--top"></div>
           <div class="postcard__cutout postcard__cutout--bottom"></div>
           
+          <!-- Left Column: Certificate & Details -->
           <div class="postcard__left">
-            <h3 class="postcard__title">Voucher Nhận Thưởng</h3>
-            <div class="postcard__details">
-              <div class="postcard__row">
-                <span class="postcard__label">📍 Địa điểm:</span>
-                <span class="postcard__value postcard__value--highlight">Phan Thiết 🌴</span>
+            <h4 class="postcard__section-title">Chi Tiết Vé Thưởng</h4>
+            
+            <!-- Basic Info / Voucher Block -->
+            <div class="postcard__voucher">
+              <div class="postcard__voucher-row">
+                <span class="voucher-label">📍 Địa điểm:</span>
+                <span class="voucher-value voucher-value--highlight">Phan Thiết - Mũi Né 🌴</span>
               </div>
-              <div class="postcard__row">
-                <span class="postcard__label">📅 Thời gian:</span>
-                <span class="postcard__value">04-06/07/2026 (dự định) 🏖️</span>
+              <div class="postcard__voucher-row">
+                <span class="voucher-label">📅 Thời gian:</span>
+                <span class="voucher-value">04-06/07/2026 (3 Ngày 2 Đêm - Dự định) 🏖️</span>
               </div>
-              <div class="postcard__row">
-                <span class="postcard__label">👥 Số lượng:</span>
-                <span class="postcard__value postcard__value--highlight">2 Người 👫</span>
+              <div class="postcard__voucher-row">
+                <span class="voucher-label">👥 Số lượng:</span>
+                <span class="voucher-value voucher-value--highlight">2 Người (Full combo trọn gói) 👫</span>
               </div>
-              <div class="postcard__row">
-                <span class="postcard__label">🏄 Chơi gì:</span>
-                <span class="postcard__value">T.B.D ⛵</span>
+            </div>
+
+            <!-- Service Grid (Di chuyển & Lưu trú) -->
+            <div class="postcard__services-grid">
+              <div class="service-box">
+                <div class="service-box__icon">🚌</div>
+                <div class="service-box__content">
+                  <div class="service-box__title">Di chuyển</div>
+                  <div class="service-box__desc">Xe Limousine đưa đón tận nơi từ Sài Gòn khứ hồi.</div>
+                </div>
               </div>
-              <div class="postcard__row">
-                <span class="postcard__label">🏨 Ở đâu:</span>
-                <span class="postcard__value">T.B.D 🏨</span>
+              <div class="service-box">
+                <div class="service-box__icon">🏨</div>
+                <div class="service-box__content">
+                  <div class="service-box__title">Lưu trú</div>
+                  <div class="service-box__desc">Resort 4 sao sát biển, phòng Ocean View kèm buffet sáng miễn phí.</div>
+                </div>
               </div>
             </div>
           </div>
           
           <div class="postcard__divider"></div>
           
+          <!-- Right Column: Timeline & Photos -->
           <div class="postcard__right">
-            <!-- Stamp box -->
-            <div class="postcard__stamp">
-              <span class="stamp-emoji">🌴</span>
-              <span class="stamp-perforation"></span>
+            <h4 class="postcard__section-title">Gợi Ý Lịch Trình</h4>
+            
+            <!-- Mini Itinerary Timeline -->
+            <div class="postcard__timeline">
+              <div class="timeline-item">
+                <div class="timeline-badge">N1</div>
+                <div class="timeline-content">
+                  <p>Check-in Resort ➔ Ngắm hoàng hôn tại Làng Chài ➔ Tiệc hải sản bờ kè.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-badge">N2</div>
+                <div class="timeline-content">
+                  <p>Đón bình minh Đồi Cát Trắng ➔ Trải nghiệm xe địa hình ATV ➔ BBQ lãng mạn bên bờ biển.</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-badge">N3</div>
+                <div class="timeline-content">
+                  <p>Tự do tắm biển & mua đặc sản ➔ Check-out về lại Sài Gòn.</p>
+                </div>
+              </div>
             </div>
-            <p class="postcard__note">
-              Phần thưởng:<br>Chuyến du lịch Phan Thiết dành cho 2 người! 🎉
-            </p>
-            <div class="postcard__signature">Phan Thiết 2026</div>
+
+            <!-- Stamp & Photo Collage Area -->
+            <div class="postcard__footer">
+              <!-- Polaroid Photos Collage -->
+              <div class="polaroid-collage">
+                <div class="photo-polaroid photo-polaroid--1">
+                  <div class="photo-polaroid__image">
+                    <!-- Add real couple photos here later -->
+                    <span class="photo-placeholder-icon">📸</span>
+                  </div>
+                  <div class="photo-polaroid__caption">Phan Thiết Wave</div>
+                </div>
+                <div class="photo-polaroid photo-polaroid--2">
+                  <div class="photo-polaroid__image">
+                    <!-- Add real couple photos here later -->
+                    <span class="photo-placeholder-icon">🌅</span>
+                  </div>
+                  <div class="photo-polaroid__caption">Sunny Day 2026</div>
+                </div>
+              </div>
+
+              <!-- Postage Stamp -->
+              <div class="postcard__stamp">
+                <span class="stamp-emoji">⛵</span>
+                <div class="stamp-perforation"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -161,6 +217,10 @@
       </div>
     </section>
   </main>
+
+  <!-- Audio Elements for BGM -->
+  <audio id="bgm-gameplay" src="assets/sounds/gameplay.mp3" loop></audio>
+  <audio id="bgm-victory" src="assets/sounds/victory.mp3"></audio>
 
   <!-- JS Scripts loaded at the end of the body -->
   <script src="src/js/game.js"></script>

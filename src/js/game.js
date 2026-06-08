@@ -33,16 +33,20 @@ class MemoryGame {
     this.isLocked = false;
     
     // Timer state
-    this.totalDuration = 30; // 30 seconds countdown
+    this.totalDuration = 30;
     this.timeLeft = this.totalDuration;
     this.timerInterval = null;
 
-    // Lazily initialized AudioContext for browser compatibility
+    // BGM Audio track references
+    this.bgmGameplay = document.getElementById("bgm-gameplay");
+    this.bgmVictory = document.getElementById("bgm-victory");
+
+    // Lazily initialized Web Audio API context for clicks pop sound
     this.audioCtx = null;
   }
 
   /**
-   * Initializes the game by resetting statistics, shuffling, and rendering the deck.
+   * Initializes the game, resets statistics, shuffles deck, starts timer, and plays gameplay BGM.
    */
   init() {
     this.resetState();
@@ -59,10 +63,11 @@ class MemoryGame {
 
     this.renderBoard();
     this.initTimer();
+    this.startBGM("gameplay");
   }
 
   /**
-   * Resets the game statistics and locks. Clears active intervals.
+   * Resets the game statistics and locks. Clears active intervals and halts victory audio.
    */
   resetState() {
     // Clear timer interval if running
@@ -77,6 +82,12 @@ class MemoryGame {
     this.matches = 0;
     this.isLocked = false;
     this.timeLeft = this.totalDuration;
+
+    // Stop victory audio if it is playing
+    if (this.bgmVictory) {
+      this.bgmVictory.pause();
+      this.bgmVictory.currentTime = 0;
+    }
 
     // Trigger callbacks with starting values
     this.onMove(this.moves);
@@ -108,14 +119,13 @@ class MemoryGame {
    */
   handleGameLoss() {
     this.isLocked = true;
+    this.stopBGM();
     this.playAudioEffect("lose");
     this.onLose();
   }
 
   /**
    * Shuffles an array using the Fisher-Yates algorithm.
-   * @param {Array} array - The array to shuffle.
-   * @returns {Array} - The shuffled array copy.
    */
   shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -126,7 +136,7 @@ class MemoryGame {
   }
 
   /**
-   * Renders the cards to the board DOM element.
+   * Renders the cards to the board DOM.
    */
   renderBoard() {
     this.board.innerHTML = "";
@@ -139,9 +149,6 @@ class MemoryGame {
 
   /**
    * Creates the HTML element for a card.
-   * @param {Object} card - The card object.
-   * @param {number} index - The index of the card in the array.
-   * @returns {HTMLElement} - The created card DOM element.
    */
   createCardElement(card, index) {
     const cardEl = document.createElement("div");
@@ -161,8 +168,6 @@ class MemoryGame {
 
   /**
    * Handles clicking on a card element.
-   * @param {HTMLElement} cardEl - The clicked card element.
-   * @param {number} index - The index of the clicked card.
    */
   handleCardClick(cardEl, index) {
     const card = this.cards[index];
@@ -225,7 +230,7 @@ class MemoryGame {
 
         // Use timeout to let the match transition finish
         setTimeout(() => {
-          this.playAudioEffect("win");
+          this.startBGM("victory");
           this.onWin();
         }, 600);
       }
@@ -245,19 +250,60 @@ class MemoryGame {
   }
 
   /**
-   * Plays a synthesized HTML5 Web Audio API sound effect.
-   * @param {string} type - The type of sound effect ('flip', 'win', 'lose').
+   * Starts BGM music track and stops/resets the other track.
+   * @param {string} mode - The track to play: 'gameplay' or 'victory'.
+   */
+  startBGM(mode) {
+    if (mode === "gameplay") {
+      // Pause and reset victory track
+      if (this.bgmVictory) {
+        this.bgmVictory.pause();
+        this.bgmVictory.currentTime = 0;
+      }
+      // Play gameplay loop BGM
+      if (this.bgmGameplay) {
+        this.bgmGameplay.currentTime = 0;
+        this.bgmGameplay.play().catch(e => console.log("Gameplay BGM start blocked by browser policy:", e));
+      }
+    } else if (mode === "victory") {
+      // Pause and reset gameplay track
+      if (this.bgmGameplay) {
+        this.bgmGameplay.pause();
+        this.bgmGameplay.currentTime = 0;
+      }
+      // Play victory track BGM
+      if (this.bgmVictory) {
+        this.bgmVictory.currentTime = 0;
+        this.bgmVictory.play().catch(e => console.log("Victory BGM start blocked by browser policy:", e));
+      }
+    }
+  }
+
+  /**
+   * Stops both background music loops.
+   */
+  stopBGM() {
+    if (this.bgmGameplay) {
+      this.bgmGameplay.pause();
+      this.bgmGameplay.currentTime = 0;
+    }
+    if (this.bgmVictory) {
+      this.bgmVictory.pause();
+      this.bgmVictory.currentTime = 0;
+    }
+  }
+
+  /**
+   * Plays a synthesized pop sound on flip, or sad note on loss.
+   * @param {string} type - The type of sound effect ('flip', 'lose').
    */
   playAudioEffect(type) {
     try {
-      // Initialize browser AudioContext on first user action to comply with security policies
       if (!this.audioCtx) {
         this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       }
 
       const ctx = this.audioCtx;
-      
-      // Resume audio context if it was suspended
       if (ctx.state === "suspended") {
         ctx.resume();
       }
@@ -265,7 +311,6 @@ class MemoryGame {
       const now = ctx.currentTime;
 
       if (type === "flip") {
-        // Short wooden tick / pop effect
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
         
@@ -282,29 +327,7 @@ class MemoryGame {
         osc.start(now);
         osc.stop(now + 0.08);
         
-      } else if (type === "win") {
-        // Energetic major arpeggio chime (C5 -> E5 -> G5 -> C6)
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        
-        notes.forEach((freq, index) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          
-          osc.type = "triangle";
-          osc.frequency.setValueAtTime(freq, now + index * 0.08);
-          
-          gain.gain.setValueAtTime(0.15, now + index * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + index * 0.08 + 0.25);
-          
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          
-          osc.start(now + index * 0.08);
-          osc.stop(now + index * 0.08 + 0.25);
-        });
-        
       } else if (type === "lose") {
-        // Melancholic descending pitch sawtooth slide
         const notes = [290, 200, 150];
         
         notes.forEach((freq, index) => {
@@ -325,7 +348,7 @@ class MemoryGame {
         });
       }
     } catch (e) {
-      console.warn("Web Audio API not supported or blocked by security policy:", e);
+      console.warn("Web Audio API not supported or blocked:", e);
     }
   }
 }

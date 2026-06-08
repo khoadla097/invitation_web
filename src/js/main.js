@@ -22,7 +22,7 @@ const resetBtn = document.getElementById("reset-btn");
 const retryBtn = document.getElementById("retry-btn"); // Game over retry
 
 /**
- * Changes active screen visibility with smooth animations.
+ * Changes active screen visibility with smooth animations and theme-swapping.
  * @param {string} screenId - The ID of the screen to activate.
  */
 const showScreen = (screenId) => {
@@ -34,6 +34,13 @@ const showScreen = (screenId) => {
       screen.classList.remove("screen--active");
     }
   });
+
+  // Dynamic Background: Switch to bright tropical theme on victory; keep dark focus theme elsewhere
+  if (screenId === "victory-screen") {
+    document.body.classList.remove("theme-dark");
+  } else {
+    document.body.classList.add("theme-dark");
+  }
 };
 
 /**
