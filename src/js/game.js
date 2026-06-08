@@ -3,7 +3,7 @@
 /**
  * Class representing the Memory Matching Game logic.
  */
-export class MemoryGame {
+class MemoryGame {
   /**
    * Create a memory game instance.
    * @param {HTMLElement} boardContainer - The DOM element where cards are rendered.

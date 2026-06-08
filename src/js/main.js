@@ -1,7 +1,5 @@
 "use strict";
 
-import { MemoryGame } from "./game.js";
-
 // Global Application State
 let playerName = "";
 let gameInstance = null;
