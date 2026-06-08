@@ -492,7 +492,7 @@ body {
 }
 
 /* ==========================================================================
-   SCREEN 3: VICTORY
+   SCREEN 3: VICTORY & ITINERARY
    ========================================================================== */
 .victory-card {
   text-align: center;
@@ -500,9 +500,13 @@ body {
   overflow: hidden;
 }
 
+.victory-card__header {
+  margin-bottom: 25px;
+}
+
 .victory-card__badge {
-  font-size: 4.5rem;
-  margin-bottom: 20px;
+  font-size: 4rem;
+  margin-bottom: 12px;
   display: inline-block;
   animation: scaleFloat 3s ease-in-out infinite;
 }
@@ -513,55 +517,156 @@ body {
 }
 
 .victory-card__title {
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   background: var(--gradient-sunset);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
 }
 
-.victory-card__message-container {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 30px;
+.victory-card__congrats {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-light);
+  line-height: 1.5;
 }
 
-.victory-card__text {
-  font-size: 1.15rem;
-  line-height: 1.6;
-  font-weight: 500;
+/* ==========================================================================
+   TICKET VOUCHER COMPONENT
+   ========================================================================== */
+.ticket {
+  position: relative;
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  margin: 25px 0 35px 0;
+  box-shadow: var(--glass-shadow);
+  text-align: left;
+  overflow: visible; /* Needed so cutouts can overlap the card boundary slightly */
+}
+
+.ticket__body {
+  flex: 1;
+  padding: 28px;
+}
+
+.ticket__title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  background: var(--gradient-ocean);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ticket__details {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ticket__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.ticket__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ticket__label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.ticket__value {
+  font-size: 1rem;
+  font-weight: 700;
   color: var(--text-light);
 }
 
-.highlight--large {
-  font-size: 1.35rem;
-  font-weight: 800;
+.ticket__value--highlight {
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.victory-card__decorations {
+/* Crease divider with dashed line */
+.ticket__divider {
+  width: 1px;
+  border-left: 1.5px dashed var(--glass-border);
+  margin: 15px 0;
+  position: relative;
+}
+
+/* Ticket Stub */
+.ticket__stub {
+  width: 130px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 24px;
-  margin-bottom: 35px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.01);
 }
 
-.emoji-float {
-  font-size: 2rem;
-  animation: floatUpDown 2.5s ease-in-out infinite;
+.ticket__barcode {
+  font-size: 1.3rem;
+  letter-spacing: 4px;
+  color: var(--text-muted);
+  opacity: 0.25;
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  user-select: none;
+  margin-bottom: 15px;
 }
 
-.emoji-float:nth-child(1) { animation-delay: 0s; }
-.emoji-float:nth-child(2) { animation-delay: 0.5s; }
-.emoji-float:nth-child(3) { animation-delay: 1s; }
-.emoji-float:nth-child(4) { animation-delay: 1.5s; }
+.ticket__code {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
 
-@keyframes floatUpDown {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+/* Semicircular notches at the fold */
+.ticket__cutout {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #090b16; /* Fakes transparency by matching the underlying background */
+  border-radius: 50%;
+  z-index: 5;
+}
+
+/* Placed at top and bottom center along the vertical divider */
+.ticket__cutout--left {
+  top: -11px;
+  left: -10px;
+  border: 1px solid var(--glass-border);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(45deg);
+}
+
+.ticket__cutout--right {
+  bottom: -11px;
+  left: -10px;
+  border: 1px solid var(--glass-border);
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  transform: rotate(45deg);
 }
 
 /* ==========================================================================
@@ -602,8 +707,49 @@ body {
     font-size: 2rem;
   }
 
-  .victory-card__text {
-    font-size: 1rem;
+  .victory-card__congrats {
+    font-size: 0.95rem;
+  }
+
+  /* Ticket mobile stacking layout */
+  .ticket {
+    flex-direction: column;
+  }
+
+  .ticket__divider {
+    width: 100%;
+    height: 1px;
+    border-left: none;
+    border-top: 1.5px dashed var(--glass-border);
+    margin: 0;
+  }
+
+  .ticket__stub {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px 24px;
+    height: auto;
+  }
+
+  .ticket__barcode {
+    transform: rotate(0deg);
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+  }
+
+  /* Reposition cutouts to vertical fold crease on the left/right edges */
+  .ticket__cutout--left {
+    left: -11px;
+    top: -10px;
+    transform: rotate(45deg);
+  }
+
+  .ticket__cutout--right {
+    right: -11px;
+    top: -10px;
+    transform: rotate(45deg);
   }
 }
 

@@ -80,23 +80,53 @@
       </div>
     </section>
 
-    <!-- Screen 3: Victory Screen -->
+    <!-- Screen 3: Victory Screen (Trip Itinerary) -->
     <section id="victory-screen" class="screen">
       <div class="glass-panel victory-card">
-        <div class="victory-card__badge">🏆</div>
-        <h2 class="victory-card__title">Chiến Thắng!</h2>
-        
-        <div class="victory-card__message-container">
-          <p id="victory-message" class="victory-card__text">
-            Chúc mừng <span id="winner-display" class="highlight highlight--large"></span> đã chiến thắng! Phần thưởng của bạn là một chuyến du lịch Phan Thiết!
+        <div class="victory-card__header">
+          <div class="victory-card__badge">🏆</div>
+          <h2 class="victory-card__title">Chiến Thắng!</h2>
+          <p class="victory-card__congrats">
+            Chúc mừng <span id="winner-display" class="highlight"></span>! Đây là phần thưởng của bạn:
           </p>
         </div>
 
-        <div class="victory-card__decorations">
-          <span class="emoji-float">🌴</span>
-          <span class="emoji-float">🌊</span>
-          <span class="emoji-float">☀️</span>
-          <span class="emoji-float">🍹</span>
+        <!-- Ticket Voucher -->
+        <div class="ticket">
+          <!-- Semicircular notches at the fold -->
+          <div class="ticket__cutout ticket__cutout--left"></div>
+          <div class="ticket__cutout ticket__cutout--right"></div>
+          
+          <div class="ticket__body">
+            <div class="ticket__title">Lịch Trình Chuyến Đi</div>
+            
+            <div class="ticket__details">
+              <div class="ticket__row">
+                <span class="ticket__label">📍 Địa điểm:</span>
+                <span class="ticket__value ticket__value--highlight">Phan Thiết 🌴</span>
+              </div>
+              <div class="ticket__row">
+                <span class="ticket__label">📅 Thời gian:</span>
+                <span class="ticket__value">04-06/07/2026 (dự định) 🏖️</span>
+              </div>
+              <div class="ticket__row">
+                <span class="ticket__label">🏄 Chơi gì:</span>
+                <span class="ticket__value">T.B.D ⛵</span>
+              </div>
+              <div class="ticket__row">
+                <span class="ticket__label">🏨 Ở đâu:</span>
+                <span class="ticket__value">T.B.D 🏨</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ticket__divider"></div>
+          
+          <!-- Ticket Stub -->
+          <div class="ticket__stub">
+            <div class="ticket__barcode">|||| | ||| || ||| | |||</div>
+            <div class="ticket__code">BOARDING PASS</div>
+          </div>
         </div>
 
         <button id="restart-btn" class="btn btn--primary btn--pulse">Chơi lại</button>
