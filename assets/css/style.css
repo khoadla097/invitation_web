@@ -886,9 +886,31 @@ body.theme-dark .card.is-matched .card__face--front {
   transform: rotate(-4deg);
 }
 
+.photo-polaroid--1 .photo-polaroid__image {
+  background-image: url('../images/pic_1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.photo-polaroid--1 .photo-polaroid__image .photo-placeholder-icon {
+  display: none;
+}
+
 .photo-polaroid--2 {
   transform: rotate(4deg);
   margin-left: -6px;
+}
+
+.photo-polaroid--2 .photo-polaroid__image {
+  background-image: url('../images/pic_2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.photo-polaroid--2 .photo-polaroid__image .photo-placeholder-icon {
+  display: none;
 }
 
 .photo-polaroid__image {
