@@ -1,0 +1,625 @@
+/* ==========================================================================
+   DESIGN SYSTEM & CUSTOM VARIABLES
+   ========================================================================== */
+:root {
+  /* HSL Tailored Colors */
+  --hue-primary: 15;      /* Warm Orange/Coral */
+  --hue-accent: 195;      /* Ocean Teal/Blue */
+  --hue-dark: 232;        /* Deep Space Blue */
+
+  /* Palette */
+  --bg-dark-1: hsl(var(--hue-dark), 40%, 6%);
+  --bg-dark-2: hsl(var(--hue-dark), 35%, 12%);
+  --text-light: hsl(210, 20%, 98%);
+  --text-muted: hsl(215, 15%, 70%);
+  --text-dark: hsl(var(--hue-dark), 40%, 15%);
+
+  /* UI Gradients */
+  --gradient-sunset: linear-gradient(135deg, hsl(15, 100%, 68%) 0%, hsl(35, 100%, 74%) 100%);
+  --gradient-ocean: linear-gradient(135deg, hsl(188, 100%, 47%) 0%, hsl(207, 100%, 54%) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --gradient-card-back: linear-gradient(135deg, hsl(var(--hue-dark), 30%, 18%) 0%, hsl(var(--hue-dark), 25%, 26%) 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(255, 126, 95, 0.5) 0%, rgba(254, 180, 123, 0.5) 100%);
+
+  /* Semantic Colors */
+  --color-error: hsl(350, 85%, 60%);
+  --color-success: hsl(142, 70%, 50%);
+
+  /* Borders & Shadows (Glassmorphism) */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-focus: rgba(255, 255, 255, 0.25);
+  --glass-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.5);
+  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+  /* Animation Timings */
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   RESET & SETUP
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-dark-1);
+  color: var(--text-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* ==========================================================================
+   AMBIENT BACKGROUND SCENE
+   ========================================================================== */
+.app-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, var(--bg-dark-2) 0%, var(--bg-dark-1) 100%);
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.bubble--1 {
+  top: 10%;
+  left: 15%;
+  width: 350px;
+  height: 350px;
+  background: hsl(15, 100%, 65%);
+  animation: floatSlowly 12s ease-in-out infinite alternate;
+}
+
+.bubble--2 {
+  bottom: 10%;
+  right: 10%;
+  width: 450px;
+  height: 450px;
+  background: hsl(195, 100%, 50%);
+  animation: floatSlowly 18s ease-in-out infinite alternate-reverse;
+}
+
+.bubble--3 {
+  top: 45%;
+  left: 60%;
+  width: 250px;
+  height: 250px;
+  background: hsl(280, 80%, 60%);
+  animation: floatSlowly 15s ease-in-out infinite alternate;
+}
+
+@keyframes floatSlowly {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-30px) scale(1.1); }
+}
+
+/* ==========================================================================
+   CONTAINERS & PANELS
+   ========================================================================== */
+.app-container {
+  width: 100%;
+  max-width: 680px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.screen--active {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.glass-panel {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: var(--glass-shadow);
+  padding: 40px;
+  width: 100%;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px -8px rgba(0, 0, 0, 0.6);
+}
+
+/* ==========================================================================
+   SCREEN 1: WELCOME
+   ========================================================================== */
+.welcome-card {
+  text-align: center;
+}
+
+.logo-badge {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+  display: inline-block;
+  animation: bounceSoft 2.5s ease-in-out infinite;
+}
+
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.welcome-card__title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.welcome-card__subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 35px;
+}
+
+.welcome-card__form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.welcome-card__label {
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  color: var(--text-light);
+  outline: none;
+  transition: var(--transition-normal);
+}
+
+.input-field::placeholder {
+  color: hsl(232, 10%, 45%);
+}
+
+.input-field:focus {
+  border-color: var(--glass-border-focus);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 12px rgba(255, 126, 95, 0.15);
+}
+
+.error-msg {
+  color: var(--color-error);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: left;
+  min-height: 20px;
+  margin-top: -4px;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.error-msg.visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+.btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-normal);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--primary {
+  background: var(--gradient-sunset);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255, 126, 95, 0.3);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 126, 95, 0.5);
+  filter: brightness(1.08);
+}
+
+.btn--primary:active {
+  transform: translateY(1px);
+}
+
+.btn--secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  color: var(--text-light);
+}
+
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn--pulse {
+  animation: pulseButton 2s infinite;
+}
+
+@keyframes pulseButton {
+  0% { box-shadow: 0 0 0 0 rgba(255, 126, 95, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 126, 95, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 126, 95, 0); }
+}
+
+/* ==========================================================================
+   SCREEN 2: GAMEPLAY
+   ========================================================================== */
+.game-card {
+  padding: 30px;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--glass-border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.game-header__greeting {
+  font-size: 1.15rem;
+  font-weight: 700;
+  max-width: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.highlight {
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.game-stats {
+  display: flex;
+  gap: 12px;
+}
+
+.stat-badge {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  gap: 6px;
+}
+
+.stat-badge__label {
+  color: var(--text-muted);
+}
+
+.stat-badge__val {
+  color: #fff;
+  font-weight: 700;
+}
+
+.board-wrapper {
+  margin: 10px 0 25px 0;
+  width: 100%;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  aspect-ratio: 4 / 2;
+}
+
+.game-footer {
+  display: flex;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   MEMORY CARDS STYLING (3D CARD FLIP)
+   ========================================================================== */
+.card {
+  aspect-ratio: 1 / 1;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--transition-slow);
+  border-radius: 16px;
+}
+
+/* Active Flip State */
+.card.is-flipped .card__inner {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--card-shadow);
+  border: 1.5px solid var(--glass-border);
+  transition: var(--transition-normal);
+}
+
+/* Card Back Design */
+.card__face--back {
+  background: var(--gradient-card-back);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Back Face Decorative Pattern/Icon */
+.card__face--back::before {
+  content: '🌴';
+  font-size: 1.8rem;
+  opacity: 0.25;
+  transition: var(--transition-normal);
+}
+
+/* Back Hover Glowing effects */
+.card:hover .card__inner {
+  transform: translateY(-4px);
+}
+
+.card.is-flipped:hover .card__inner {
+  transform: translateY(-4px) rotateY(180deg);
+}
+
+.card:not(.is-flipped):hover .card__face--back {
+  border-color: rgba(255, 126, 95, 0.4);
+  box-shadow: 0 0 15px rgba(255, 126, 95, 0.25);
+}
+
+.card:not(.is-flipped):hover .card__face--back::before {
+  opacity: 0.65;
+  transform: scale(1.1);
+}
+
+/* Card Front Design */
+.card__face--front {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  font-size: 2.2rem;
+  transform: rotateY(180deg);
+  user-select: none;
+}
+
+/* Matched Card styling */
+.card.is-matched .card__face--front {
+  border-color: var(--color-success);
+  background: rgba(74, 222, 128, 0.06);
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+  animation: matchPulse 0.5s ease-in-out;
+}
+
+@keyframes matchPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Disabled clicks */
+.card.is-matched,
+.card.is-disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   SCREEN 3: VICTORY
+   ========================================================================== */
+.victory-card {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.victory-card__badge {
+  font-size: 4.5rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: scaleFloat 3s ease-in-out infinite;
+}
+
+@keyframes scaleFloat {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.05) translateY(-8px); }
+}
+
+.victory-card__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: var(--gradient-sunset);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.victory-card__message-container {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.victory-card__text {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.highlight--large {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.victory-card__decorations {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 35px;
+}
+
+.emoji-float {
+  font-size: 2rem;
+  animation: floatUpDown 2.5s ease-in-out infinite;
+}
+
+.emoji-float:nth-child(1) { animation-delay: 0s; }
+.emoji-float:nth-child(2) { animation-delay: 0.5s; }
+.emoji-float:nth-child(3) { animation-delay: 1s; }
+.emoji-float:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes floatUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+@media (max-width: 600px) {
+  .glass-panel {
+    padding: 30px 20px;
+  }
+  
+  .welcome-card__title {
+    font-size: 1.85rem;
+  }
+  
+  .game-stats {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .game-header__greeting {
+    max-width: 100%;
+  }
+
+  .game-board {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  
+  .card__face--front {
+    font-size: 1.8rem;
+  }
+  
+  .card__face--back::before {
+    font-size: 1.4rem;
+  }
+  
+  .victory-card__title {
+    font-size: 2rem;
+  }
+
+  .victory-card__text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-board {
+    /* Auto layout shifts to 2x4 on very small screens to fit space better */
+    grid-template-columns: repeat(2, 1fr);
+    aspect-ratio: 2 / 4;
+    gap: 12px;
+  }
+
+  .card__face--front {
+    font-size: 2.2rem;
+  }
+
+  .card__face--back::before {
+    font-size: 1.8rem;
+  }
+}
