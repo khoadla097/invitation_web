@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thử thách Lật Bài - Chuyến Đi Phan Thiết</title>
-  <!-- Google Fonts for premium typography -->
+  <!-- Google Fonts for premium tropical typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,20 +13,20 @@
 </head>
 <body>
   <div class="app-background">
-    <!-- Animated background bubbles for dynamic feel -->
-    <div class="bubble bubble--1"></div>
-    <div class="bubble bubble--2"></div>
-    <div class="bubble bubble--3"></div>
+    <!-- Tropical Sun and Sea waves styling elements -->
+    <div class="tropical-sun"></div>
+    <div class="sea-wave sea-wave--1"></div>
+    <div class="sea-wave sea-wave--2"></div>
   </div>
 
   <main class="app-container">
     <!-- Screen 1: Welcome Screen -->
     <section id="welcome-screen" class="screen screen--active">
-      <div class="glass-panel welcome-card">
+      <div class="wood-panel welcome-card">
         <div class="welcome-card__header">
           <div class="logo-badge">🌴</div>
           <h1 class="welcome-card__title">Thử Thách Lật Bài</h1>
-          <p class="welcome-card__subtitle">Nhận ngay phần quà đặc biệt từ Phan Thiết!</p>
+          <p class="welcome-card__subtitle">Dành ngay chuyến du lịch Phan Thiết đặc biệt!</p>
         </div>
         
         <div class="welcome-card__form">
@@ -51,12 +51,16 @@
 
     <!-- Screen 2: Game Screen -->
     <section id="game-screen" class="screen">
-      <div class="glass-panel game-card">
+      <div class="wood-panel game-card">
         <header class="game-header">
           <div class="game-header__greeting">
             Chào <span id="player-display" class="highlight"></span>, chúc may mắn!
           </div>
           <div class="game-stats">
+            <div class="stat-badge stat-badge--timer">
+              <span class="stat-badge__label">⏱️:</span>
+              <span id="timer-count" class="stat-badge__val">30</span>s
+            </div>
             <div class="stat-badge">
               <span class="stat-badge__label">Lượt đi:</span>
               <span id="moves-count" class="stat-badge__val">0</span>
@@ -67,6 +71,11 @@
             </div>
           </div>
         </header>
+
+        <!-- Countdown progress bar -->
+        <div class="timer-bar-container">
+          <div id="timer-bar" class="timer-bar"></div>
+        </div>
 
         <div class="board-wrapper">
           <div id="game-board" class="game-board">
@@ -80,9 +89,9 @@
       </div>
     </section>
 
-    <!-- Screen 3: Victory Screen (Trip Itinerary) -->
+    <!-- Screen 3: Victory Screen (Tropical Postcard) -->
     <section id="victory-screen" class="screen">
-      <div class="glass-panel victory-card">
+      <div class="wood-panel victory-card">
         <div class="victory-card__header">
           <div class="victory-card__badge">🏆</div>
           <h2 class="victory-card__title">Chiến Thắng!</h2>
@@ -91,45 +100,64 @@
           </p>
         </div>
 
-        <!-- Ticket Voucher -->
-        <div class="ticket">
-          <!-- Semicircular notches at the fold -->
-          <div class="ticket__cutout ticket__cutout--left"></div>
-          <div class="ticket__cutout ticket__cutout--right"></div>
+        <!-- Postcard Design -->
+        <div class="postcard">
+          <!-- Postcard cutout notches -->
+          <div class="postcard__cutout postcard__cutout--top"></div>
+          <div class="postcard__cutout postcard__cutout--bottom"></div>
           
-          <div class="ticket__body">
-            <div class="ticket__title">Lịch Trình Chuyến Đi</div>
-            
-            <div class="ticket__details">
-              <div class="ticket__row">
-                <span class="ticket__label">📍 Địa điểm:</span>
-                <span class="ticket__value ticket__value--highlight">Phan Thiết 🌴</span>
+          <div class="postcard__left">
+            <h3 class="postcard__title">Voucher Nhận Thưởng</h3>
+            <div class="postcard__details">
+              <div class="postcard__row">
+                <span class="postcard__label">📍 Địa điểm:</span>
+                <span class="postcard__value postcard__value--highlight">Phan Thiết 🌴</span>
               </div>
-              <div class="ticket__row">
-                <span class="ticket__label">📅 Thời gian:</span>
-                <span class="ticket__value">04-06/07/2026 (dự định) 🏖️</span>
+              <div class="postcard__row">
+                <span class="postcard__label">📅 Thời gian:</span>
+                <span class="postcard__value">04-06/07/2026 (dự định) 🏖️</span>
               </div>
-              <div class="ticket__row">
-                <span class="ticket__label">🏄 Chơi gì:</span>
-                <span class="ticket__value">T.B.D ⛵</span>
+              <div class="postcard__row">
+                <span class="postcard__label">👥 Số lượng:</span>
+                <span class="postcard__value postcard__value--highlight">2 Người 👫</span>
               </div>
-              <div class="ticket__row">
-                <span class="ticket__label">🏨 Ở đâu:</span>
-                <span class="ticket__value">T.B.D 🏨</span>
+              <div class="postcard__row">
+                <span class="postcard__label">🏄 Chơi gì:</span>
+                <span class="postcard__value">T.B.D ⛵</span>
+              </div>
+              <div class="postcard__row">
+                <span class="postcard__label">🏨 Ở đâu:</span>
+                <span class="postcard__value">T.B.D 🏨</span>
               </div>
             </div>
           </div>
           
-          <div class="ticket__divider"></div>
+          <div class="postcard__divider"></div>
           
-          <!-- Ticket Stub -->
-          <div class="ticket__stub">
-            <div class="ticket__barcode">|||| | ||| || ||| | |||</div>
-            <div class="ticket__code">BOARDING PASS</div>
+          <div class="postcard__right">
+            <!-- Stamp box -->
+            <div class="postcard__stamp">
+              <span class="stamp-emoji">🌴</span>
+              <span class="stamp-perforation"></span>
+            </div>
+            <p class="postcard__note">
+              Phần thưởng:<br>Chuyến du lịch Phan Thiết dành cho 2 người! 🎉
+            </p>
+            <div class="postcard__signature">Phan Thiết 2026</div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <button id="restart-btn" class="btn btn--primary btn--pulse">Chơi lại</button>
+    <!-- Screen 4: Lose Screen (Game Over) -->
+    <section id="lose-screen" class="screen">
+      <div class="wood-panel lose-card">
+        <div class="lose-card__badge">😢</div>
+        <h2 class="lose-card__title">Hết Giờ Mất Rồi!</h2>
+        <p class="lose-card__text">
+          Bạn không kịp hoàn thành thử thách trong vòng 30 giây. Hãy thử sức lại lần nữa nhé!
+        </p>
+        <button id="retry-btn" class="btn btn--primary btn--pulse">Chơi lại</button>
       </div>
     </section>
   </main>

@@ -1,37 +1,42 @@
 /* ==========================================================================
-   DESIGN SYSTEM & CUSTOM VARIABLES
+   TROPICAL BEACH DESIGN SYSTEM
    ========================================================================== */
 :root {
-  /* HSL Tailored Colors */
-  --hue-primary: 15;      /* Warm Orange/Coral */
-  --hue-accent: 195;      /* Ocean Teal/Blue */
-  --hue-dark: 232;        /* Deep Space Blue */
+  /* Tropical Pastel/Sunny Colors */
+  --hue-primary: 24;      /* Tropical Sandy Gold / Coral */
+  --hue-accent: 188;      /* Ocean Water Cyan/Teal */
+  --hue-wood: 30;         /* Pine Driftwood Brown */
 
   /* Palette */
-  --bg-dark-1: hsl(var(--hue-dark), 40%, 6%);
-  --bg-dark-2: hsl(var(--hue-dark), 35%, 12%);
-  --text-light: hsl(210, 20%, 98%);
-  --text-muted: hsl(215, 15%, 70%);
-  --text-dark: hsl(var(--hue-dark), 40%, 15%);
-
+  --bg-sky: #e0f7fa;      /* Very Light Cyan */
+  --bg-sea: #26c6da;      /* Clear Sunny Ocean Cyan */
+  --text-dark: #37474f;   /* Dark Slate Blue/Grey */
+  --text-muted: #78909c;  /* Muted Slate Grey */
+  --text-light: #ffffff;  
+  
   /* UI Gradients */
-  --gradient-sunset: linear-gradient(135deg, hsl(15, 100%, 68%) 0%, hsl(35, 100%, 74%) 100%);
-  --gradient-ocean: linear-gradient(135deg, hsl(188, 100%, 47%) 0%, hsl(207, 100%, 54%) 100%);
-  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-  --gradient-card-back: linear-gradient(135deg, hsl(var(--hue-dark), 30%, 18%) 0%, hsl(var(--hue-dark), 25%, 26%) 100%);
-  --gradient-glow: linear-gradient(135deg, rgba(255, 126, 95, 0.5) 0%, rgba(254, 180, 123, 0.5) 100%);
+  --gradient-sky-ocean: linear-gradient(180deg, #b2ebf2 0%, #e0f7fa 40%, #80deea 100%);
+  --gradient-tropical-sun: radial-gradient(circle, #fff9c4 10%, #ffd54f 50%, #ffb300 100%);
+  --gradient-sand: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  
+  /* Wood Bezel & Panel Colors */
+  --wood-bg: #f7ede2;
+  --wood-border: #cdb49e;
+  
+  /* Card Gradients */
+  --gradient-card-back: linear-gradient(135deg, #ffca28 0%, #f57c00 100%); /* Sandy Sunburst */
+  --gradient-timer-bar: linear-gradient(to right, #4db6ac 0%, #ffd54f 60%, #ff8a65 100%);
 
   /* Semantic Colors */
-  --color-error: hsl(350, 85%, 60%);
-  --color-success: hsl(142, 70%, 50%);
+  --color-error: #e53935;
+  --color-success: #43a047;
+  --color-timer-warning: #ff5722;
 
-  /* Borders & Shadows (Glassmorphism) */
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-focus: rgba(255, 255, 255, 0.25);
-  --glass-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.5);
-  --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-
-  /* Animation Timings */
+  /* Shadows */
+  --wood-shadow: 0 16px 36px rgba(100, 75, 50, 0.18), inset 0 2px 4px rgba(255, 255, 255, 0.7);
+  --card-shadow: 0 8px 16px rgba(100, 75, 50, 0.12);
+  
+  /* Transitions */
   --transition-normal: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -47,18 +52,18 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-dark-1);
-  color: var(--text-light);
+  color: var(--text-dark);
   min-height: 100vh;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  background-color: var(--bg-sky);
 }
 
 /* ==========================================================================
-   AMBIENT BACKGROUND SCENE
+   AMBIENT BACKGROUND SCENE (TROPICAL BEACH)
    ========================================================================== */
 .app-background {
   position: absolute;
@@ -68,51 +73,55 @@ body {
   height: 100%;
   z-index: -1;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, var(--bg-dark-2) 0%, var(--bg-dark-1) 100%);
+  background: var(--gradient-sky-ocean);
 }
 
-.bubble {
+.tropical-sun {
   position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 280px;
+  height: 280px;
+  background: var(--gradient-tropical-sun);
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
+  opacity: 0.7;
+  filter: blur(25px);
+  animation: pulseSun 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulseSun {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.sea-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120%;
+  background: rgba(38, 198, 218, 0.25);
+  filter: blur(40px);
   pointer-events: none;
 }
 
-.bubble--1 {
-  top: 10%;
-  left: 15%;
-  width: 350px;
-  height: 350px;
-  background: hsl(15, 100%, 65%);
-  animation: floatSlowly 12s ease-in-out infinite alternate;
+.sea-wave--1 {
+  height: 220px;
+  animation: waveMotion 15s ease-in-out infinite alternate;
 }
 
-.bubble--2 {
-  bottom: 10%;
-  right: 10%;
-  width: 450px;
-  height: 450px;
-  background: hsl(195, 100%, 50%);
-  animation: floatSlowly 18s ease-in-out infinite alternate-reverse;
+.sea-wave--2 {
+  height: 120px;
+  background: rgba(0, 172, 193, 0.15);
+  animation: waveMotion 10s ease-in-out infinite alternate-reverse;
 }
 
-.bubble--3 {
-  top: 45%;
-  left: 60%;
-  width: 250px;
-  height: 250px;
-  background: hsl(280, 80%, 60%);
-  animation: floatSlowly 15s ease-in-out infinite alternate;
-}
-
-@keyframes floatSlowly {
-  0% { transform: translateY(0) scale(1); }
-  100% { transform: translateY(-30px) scale(1.1); }
+@keyframes waveMotion {
+  0% { transform: translate(-5%, 20px) rotate(0deg); }
+  100% { transform: translate(0%, -10px) rotate(2deg); }
 }
 
 /* ==========================================================================
-   CONTAINERS & PANELS
+   CONTAINERS & WOOD PANELS (BEACH SHACK STYLED)
    ========================================================================== */
 .app-container {
   width: 100%;
@@ -140,32 +149,39 @@ body {
   pointer-events: auto;
 }
 
-.glass-panel {
-  background: var(--gradient-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
+/* Wood Board Panel look */
+.wood-panel {
+  background-color: var(--wood-bg);
+  /* Pine wood horizontal plank pattern */
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(215, 185, 155, 0.15),
+    rgba(215, 185, 155, 0.15) 1px,
+    transparent 1px,
+    transparent 38px
+  );
+  border: 8px solid var(--wood-border);
   border-radius: 24px;
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--wood-shadow);
   padding: 40px;
   width: 100%;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  position: relative;
+  transition: transform var(--transition-normal);
 }
 
-.glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 24px 60px -8px rgba(0, 0, 0, 0.6);
+.wood-panel:hover {
+  transform: translateY(-2px);
 }
 
 /* ==========================================================================
-   SCREEN 1: WELCOME
+   SCREEN 1: WELCOME SCREEN
    ========================================================================== */
 .welcome-card {
   text-align: center;
 }
 
 .logo-badge {
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   margin-bottom: 15px;
   display: inline-block;
   animation: bounceSoft 2.5s ease-in-out infinite;
@@ -173,22 +189,22 @@ body {
 
 @keyframes bounceSoft {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-12px); }
 }
 
 .welcome-card__title {
-  font-size: 2.25rem;
+  font-size: 2.3rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 8px;
-  background: var(--gradient-sunset);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #c77c3d; /* Sandy warm color */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .welcome-card__subtitle {
-  color: var(--text-muted);
+  color: var(--text-dark);
   font-size: 0.95rem;
+  font-weight: 600;
   margin-bottom: 35px;
 }
 
@@ -202,7 +218,7 @@ body {
 .welcome-card__label {
   text-align: left;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--text-muted);
@@ -216,31 +232,30 @@ body {
 
 .input-field {
   width: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--glass-border);
+  background: #ffffff;
+  border: 2px solid var(--wood-border);
   border-radius: 12px;
   padding: 16px 20px;
   font-size: 1.05rem;
   font-family: inherit;
-  color: var(--text-light);
+  color: var(--text-dark);
   outline: none;
   transition: var(--transition-normal);
 }
 
 .input-field::placeholder {
-  color: hsl(232, 10%, 45%);
+  color: #b0bec5;
 }
 
 .input-field:focus {
-  border-color: var(--glass-border-focus);
-  background: rgba(0, 0, 0, 0.35);
-  box-shadow: 0 0 12px rgba(255, 126, 95, 0.15);
+  border-color: #00acc1;
+  box-shadow: 0 0 10px rgba(0, 172, 193, 0.15);
 }
 
 .error-msg {
   color: var(--color-error);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: left;
   min-height: 20px;
   margin-top: -4px;
@@ -274,14 +289,14 @@ body {
 }
 
 .btn--primary {
-  background: var(--gradient-sunset);
+  background: linear-gradient(135deg, #00acc1 0%, #00838f 100%);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(255, 126, 95, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 172, 193, 0.3);
 }
 
 .btn--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 126, 95, 0.5);
+  box-shadow: 0 6px 20px rgba(0, 172, 193, 0.45);
   filter: brightness(1.08);
 }
 
@@ -290,25 +305,25 @@ body {
 }
 
 .btn--secondary {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid var(--glass-border);
-  color: var(--text-light);
+  background: #ffffff;
+  border: 2px solid var(--wood-border);
+  color: var(--text-dark);
 }
 
 .btn--secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: #faf8f5;
+  border-color: #78909c;
   transform: translateY(-1px);
 }
 
 .btn--pulse {
-  animation: pulseButton 2s infinite;
+  animation: pulseButton 2.5s infinite;
 }
 
 @keyframes pulseButton {
-  0% { box-shadow: 0 0 0 0 rgba(255, 126, 95, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(255, 126, 95, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 126, 95, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(0, 172, 193, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(0, 172, 193, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 172, 193, 0); }
 }
 
 /* ==========================================================================
@@ -322,43 +337,38 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(205, 180, 158, 0.4);
   flex-wrap: wrap;
   gap: 12px;
 }
 
 .game-header__greeting {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  max-width: 60%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: var(--text-dark);
 }
 
 .highlight {
-  background: var(--gradient-sunset);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #c77c3d; /* warm sand */
   font-weight: 800;
 }
 
 .game-stats {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .stat-badge {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid var(--glass-border);
-  padding: 8px 14px;
+  background: #ffffff;
+  border: 1.5px solid var(--wood-border);
+  padding: 6px 12px;
   border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 
 .stat-badge__label {
@@ -366,8 +376,40 @@ body {
 }
 
 .stat-badge__val {
-  color: #fff;
-  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.stat-badge--timer.is-warning {
+  border-color: var(--color-timer-warning);
+  background: #fbe9e7;
+  color: var(--color-timer-warning);
+  animation: textFlash 0.5s alternate infinite;
+}
+
+.stat-badge--timer.is-warning .stat-badge__val {
+  color: var(--color-timer-warning);
+}
+
+@keyframes textFlash {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* Timer progress bar styles */
+.timer-bar-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.timer-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--gradient-timer-bar);
+  transition: width 0.1s linear; /* Smooth micro transitions */
 }
 
 .board-wrapper {
@@ -424,25 +466,24 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: var(--card-shadow);
-  border: 1.5px solid var(--glass-border);
+  border: 2px solid var(--wood-border);
   transition: var(--transition-normal);
 }
 
-/* Card Back Design */
+/* Card Back (Sandy Summer Wave Pattern) */
 .card__face--back {
   background: var(--gradient-card-back);
-  color: rgba(255, 255, 255, 0.8);
+  color: #fff;
 }
 
-/* Back Face Decorative Pattern/Icon */
 .card__face--back::before {
-  content: '🌴';
+  content: '🌊';
   font-size: 1.8rem;
-  opacity: 0.25;
+  opacity: 0.8;
   transition: var(--transition-normal);
 }
 
-/* Back Hover Glowing effects */
+/* Hover scales and tilts */
 .card:hover .card__inner {
   transform: translateY(-4px);
 }
@@ -452,19 +493,18 @@ body {
 }
 
 .card:not(.is-flipped):hover .card__face--back {
-  border-color: rgba(255, 126, 95, 0.4);
-  box-shadow: 0 0 15px rgba(255, 126, 95, 0.25);
+  border-color: #ffd54f;
+  box-shadow: 0 8px 20px rgba(245, 124, 0, 0.3);
 }
 
 .card:not(.is-flipped):hover .card__face--back::before {
-  opacity: 0.65;
-  transform: scale(1.1);
+  transform: scale(1.15) rotate(5deg);
 }
 
 /* Card Front Design */
 .card__face--front {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: #ffffff;
+  border-color: #80deea;
   font-size: 2.2rem;
   transform: rotateY(180deg);
   user-select: none;
@@ -473,8 +513,8 @@ body {
 /* Matched Card styling */
 .card.is-matched .card__face--front {
   border-color: var(--color-success);
-  background: rgba(74, 222, 128, 0.06);
-  box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+  background: #e8f5e9;
+  box-shadow: 0 0 12px rgba(67, 160, 71, 0.25);
   animation: matchPulse 0.5s ease-in-out;
 }
 
@@ -484,7 +524,6 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Disabled clicks */
 .card.is-matched,
 .card.is-disabled {
   cursor: default;
@@ -492,188 +531,234 @@ body {
 }
 
 /* ==========================================================================
-   SCREEN 3: VICTORY & ITINERARY
+   SCREEN 3: VICTORY & POSTCARD ITINERARY
    ========================================================================== */
 .victory-card {
   text-align: center;
-  position: relative;
-  overflow: hidden;
 }
 
 .victory-card__header {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .victory-card__badge {
-  font-size: 4rem;
-  margin-bottom: 12px;
+  font-size: 3.8rem;
+  margin-bottom: 10px;
   display: inline-block;
   animation: scaleFloat 3s ease-in-out infinite;
 }
 
 @keyframes scaleFloat {
   0%, 100% { transform: scale(1) translateY(0); }
-  50% { transform: scale(1.05) translateY(-8px); }
+  50% { transform: scale(1.05) translateY(-6px); }
 }
 
 .victory-card__title {
   font-size: 2.25rem;
   font-weight: 800;
-  margin-bottom: 10px;
-  background: var(--gradient-sunset);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  color: #c77c3d;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .victory-card__congrats {
   font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-light);
-  line-height: 1.5;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.4;
 }
 
-/* ==========================================================================
-   TICKET VOUCHER COMPONENT
-   ========================================================================== */
-.ticket {
+/* Postcard Design (Cream cardstock with stamps) */
+.postcard {
   position: relative;
   display: flex;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  margin: 25px 0 35px 0;
-  box-shadow: var(--glass-shadow);
+  background: #fffdf5;
+  border: 3px solid #e2d2c2;
+  border-radius: 16px;
+  margin: 20px 0 10px 0;
+  box-shadow: 0 10px 25px rgba(100, 80, 60, 0.12);
   text-align: left;
-  overflow: visible; /* Needed so cutouts can overlap the card boundary slightly */
+  overflow: visible; /* Let notches overlap border */
 }
 
-.ticket__body {
-  flex: 1;
-  padding: 28px;
+.postcard__left {
+  flex: 1.3;
+  padding: 24px;
 }
 
-.ticket__title {
-  font-size: 0.85rem;
+.postcard__title {
+  font-size: 0.95rem;
   font-weight: 800;
-  color: var(--text-muted);
-  letter-spacing: 2px;
+  color: #8d6e63;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-bottom: 20px;
-  background: var(--gradient-ocean);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #efebe9;
+  padding-bottom: 6px;
 }
 
-.ticket__details {
+.postcard__details {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
-.ticket__row {
+.postcard__row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #efebe9;
 }
 
-.ticket__row:last-child {
+.postcard__row:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
 
-.ticket__label {
-  font-size: 0.95rem;
+.postcard__label {
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-muted);
 }
 
-.ticket__value {
-  font-size: 1rem;
+.postcard__value {
+  font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
-.ticket__value--highlight {
-  background: var(--gradient-sunset);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.postcard__value--highlight {
+  color: #00acc1;
+  font-weight: 800;
 }
 
-/* Crease divider with dashed line */
-.ticket__divider {
-  width: 1px;
-  border-left: 1.5px dashed var(--glass-border);
+/* Postcard dashed crease line divider */
+.postcard__divider {
+  width: 0;
+  border-left: 2px dashed #d7ccc8;
   margin: 15px 0;
   position: relative;
 }
 
-/* Ticket Stub */
-.ticket__stub {
-  width: 130px;
+.postcard__right {
+  flex: 1;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  background: #faf8f0;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Postage stamp placeholder styling */
+.postcard__stamp {
+  width: 70px;
+  height: 85px;
+  border: 2px dashed #bcaaa4;
+  background: #ffffff;
+  padding: 5px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.01);
-}
-
-.ticket__barcode {
-  font-size: 1.3rem;
-  letter-spacing: 4px;
-  color: var(--text-muted);
-  opacity: 0.25;
-  transform: rotate(-90deg);
-  white-space: nowrap;
-  user-select: none;
+  transform: rotate(4deg);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   margin-bottom: 15px;
+  position: relative;
 }
 
-.ticket__code {
-  font-size: 0.65rem;
+.stamp-emoji {
+  font-size: 2.2rem;
+}
+
+.postcard__note {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #5d4037;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.postcard__signature {
+  align-self: flex-end;
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
+  color: #8d6e63;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-/* Semicircular notches at the fold */
-.ticket__cutout {
+/* Notches (Fakes transparency punches by matching the wood bg color) */
+.postcard__cutout {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background: #090b16; /* Fakes transparency by matching the underlying background */
+  width: 24px;
+  height: 24px;
+  background: var(--wood-bg);
   border-radius: 50%;
   z-index: 5;
 }
 
-/* Placed at top and bottom center along the vertical divider */
-.ticket__cutout--left {
-  top: -11px;
-  left: -10px;
-  border: 1px solid var(--glass-border);
+.postcard__cutout--top {
+  top: -13px;
+  left: calc(54.3% - 12px); /* Centered at divider line */
+  border: 3px solid #e2d2c2;
   border-top-color: transparent;
   border-left-color: transparent;
+  border-right-color: transparent;
   transform: rotate(45deg);
 }
 
-.ticket__cutout--right {
-  bottom: -11px;
-  left: -10px;
-  border: 1px solid var(--glass-border);
+.postcard__cutout--bottom {
+  bottom: -13px;
+  left: calc(54.3% - 12px);
+  border: 3px solid #e2d2c2;
   border-bottom-color: transparent;
+  border-left-color: transparent;
   border-right-color: transparent;
   transform: rotate(45deg);
+}
+
+/* ==========================================================================
+   SCREEN 4: LOSE SCREEN (GAME OVER)
+   ========================================================================== */
+.lose-card {
+  text-align: center;
+}
+
+.lose-card__badge {
+  font-size: 3.8rem;
+  margin-bottom: 15px;
+  display: inline-block;
+  animation: swaySoft 3s ease-in-out infinite;
+}
+
+@keyframes swaySoft {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-8deg); }
+}
+
+.lose-card__title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--color-error);
+}
+
+.lose-card__text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 30px;
 }
 
 /* ==========================================================================
    RESPONSIVE DESIGN (MEDIA QUERIES)
    ========================================================================== */
 @media (max-width: 600px) {
-  .glass-panel {
+  .wood-panel {
     padding: 30px 20px;
   }
   
@@ -704,51 +789,73 @@ body {
   }
   
   .victory-card__title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .victory-card__congrats {
     font-size: 0.95rem;
   }
 
-  /* Ticket mobile stacking layout */
-  .ticket {
+  /* Postcard mobile stacking layout */
+  .postcard {
     flex-direction: column;
   }
 
-  .ticket__divider {
+  .postcard__divider {
     width: 100%;
-    height: 1px;
+    height: 0;
     border-left: none;
-    border-top: 1.5px dashed var(--glass-border);
+    border-top: 2px dashed #d7ccc8;
     margin: 0;
   }
 
-  .ticket__stub {
+  .postcard__right {
     width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 16px 24px;
     flex-direction: row;
     justify-content: space-between;
-    padding: 16px 24px;
-    height: auto;
+    align-items: center;
   }
 
-  .ticket__barcode {
-    transform: rotate(0deg);
+  .postcard__stamp {
+    width: 50px;
+    height: 60px;
     margin-bottom: 0;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
+  }
+
+  .stamp-emoji {
+    font-size: 1.5rem;
+  }
+
+  .postcard__note {
+    font-size: 0.85rem;
+    text-align: left;
+  }
+
+  .postcard__signature {
+    align-self: center;
   }
 
   /* Reposition cutouts to vertical fold crease on the left/right edges */
-  .ticket__cutout--left {
-    left: -11px;
-    top: -10px;
+  .postcard__cutout--top {
+    left: -13px;
+    top: calc(50% - 12px); /* Align centered with horizontal fold */
+    border: 3px solid #e2d2c2;
+    border-top-color: transparent;
+    border-left-color: transparent;
     transform: rotate(45deg);
   }
 
-  .ticket__cutout--right {
-    right: -11px;
-    top: -10px;
+  .postcard__cutout--bottom {
+    right: -13px;
+    left: auto;
+    top: calc(50% - 12px);
+    border: 3px solid #e2d2c2;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
     transform: rotate(45deg);
   }
 }

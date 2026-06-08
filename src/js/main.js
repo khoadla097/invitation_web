@@ -14,9 +14,12 @@ const winnerDisplay = document.getElementById("winner-display");
 
 const movesCount = document.getElementById("moves-count");
 const matchesCount = document.getElementById("matches-count");
+const timerCount = document.getElementById("timer-count");
+const timerBar = document.getElementById("timer-bar");
+
 const gameBoard = document.getElementById("game-board");
 const resetBtn = document.getElementById("reset-btn");
-const restartBtn = document.getElementById("restart-btn");
+const retryBtn = document.getElementById("retry-btn"); // Game over retry
 
 /**
  * Changes active screen visibility with smooth animations.
@@ -65,8 +68,23 @@ const handleStartGame = () => {
       onMatch: (matches) => {
         matchesCount.textContent = matches;
       },
+      onTimeUpdate: (timePercent, timeLeft) => {
+        timerCount.textContent = timeLeft;
+        timerBar.style.width = `${timePercent}%`;
+        
+        // Add flashing warning styles when time is low (< 10s)
+        const timerBadge = timerCount.parentElement;
+        if (timeLeft <= 10) {
+          timerBadge.classList.add("is-warning");
+        } else {
+          timerBadge.classList.remove("is-warning");
+        }
+      },
       onWin: () => {
         showScreen("victory-screen");
+      },
+      onLose: () => {
+        showScreen("lose-screen");
       }
     });
   }
@@ -85,9 +103,9 @@ const handleResetGame = () => {
 };
 
 /**
- * Starts a new game session for the player.
+ * Retries the game after a Game Over scenario.
  */
-const handleRestartGame = () => {
+const handleRetryGame = () => {
   if (gameInstance) {
     gameInstance.init();
   }
@@ -112,4 +130,4 @@ nameInput.addEventListener("input", () => {
 });
 
 resetBtn.addEventListener("click", handleResetGame);
-restartBtn.addEventListener("click", handleRestartGame);
+retryBtn.addEventListener("click", handleRetryGame);
