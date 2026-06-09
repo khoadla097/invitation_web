@@ -167,7 +167,7 @@ body.theme-dark .sea-wave--2 {
    ========================================================================== */
 .app-container {
   width: 100%;
-  max-width: 760px; /* Marginally wider to support travel brochure columns density */
+  max-width: 1080px; /* Expanded for wide scrapbook style victory container */
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -225,6 +225,14 @@ body.theme-dark .wood-panel {
    ========================================================================== */
 .welcome-card {
   text-align: center;
+}
+
+.welcome-card,
+.game-card,
+.lose-card {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .logo-badge {
@@ -605,6 +613,9 @@ body.theme-dark .card.is-matched .card__face--front {
    ========================================================================== */
 .victory-card {
   text-align: center;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .victory-card__header {
@@ -719,20 +730,23 @@ body.theme-dark .card.is-matched .card__face--front {
 }
 
 .postcard__voucher-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 110px 1fr;
   align-items: center;
   font-size: 0.88rem;
+  gap: 12px;
 }
 
 .voucher-label {
   font-weight: 600;
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .voucher-value {
   font-weight: 700;
   color: var(--text-dark);
+  text-align: left;
 }
 
 .voucher-value--highlight {
@@ -803,6 +817,7 @@ body.theme-dark .card.is-matched .card__face--front {
   gap: 14px;
   position: relative;
   padding-left: 8px;
+  padding-bottom: 140px; /* Prevent mascot speech bubble from overlapping timeline text */
 }
 
 /* Vertical line connection */
@@ -1128,3 +1143,323 @@ body.theme-dark .card.is-matched .card__face--front {
     font-size: 1.8rem;
   }
 }
+
+/* ==========================================================================
+   TRAVEL SCRAPBOOK & PERSONALIZATION DECORATIONS
+   ========================================================================== */
+
+/* Flower Corner Framing */
+.victory-card__flower {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 10;
+  mix-blend-mode: multiply; /* Blends floral watercolor edges smoothly onto the paper */
+}
+.victory-card__flower--top-left {
+  top: -15px;
+  left: -15px;
+  background-image: url('../images/flower-top-left.png');
+}
+.victory-card__flower--top-right {
+  top: -15px;
+  right: -15px;
+  background-image: url('../images/flower-top-right.png');
+}
+
+/* Scrapbook Photo Polaroid Style */
+.scrapbook-photo {
+  position: relative;
+  background: #ffffff;
+  padding: 8px 8px 18px 8px;
+  border: 1px solid #e2d7cb;
+  box-shadow: 0 8px 24px rgba(100, 75, 50, 0.08);
+  border-radius: 6px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  z-index: 2;
+}
+
+/* Alternating rotations for hand-glued realism */
+.scrapbook-photo:nth-of-type(odd),
+.timeline-item:nth-of-type(odd) .scrapbook-photo {
+  transform: rotate(-3deg);
+}
+.scrapbook-photo:nth-of-type(even),
+.timeline-item:nth-of-type(even) .scrapbook-photo {
+  transform: rotate(2deg);
+}
+
+/* Hover straightens out photos */
+.scrapbook-photo:hover {
+  transform: rotate(0deg) scale(1.05) !important;
+  box-shadow: 0 12px 28px rgba(100, 75, 50, 0.16);
+  z-index: 10;
+}
+
+.scrapbook-photo img {
+  border-radius: 3px;
+  object-fit: cover;
+  display: block;
+}
+
+.scrapbook-photo__caption {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #8d6e63;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Washi/Scrapbook Tape Decoration */
+.scrapbook-photo__tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 70px;
+  height: 20px;
+  background: rgba(246, 238, 222, 0.75);
+  border-left: 1px dashed rgba(141, 110, 99, 0.15);
+  border-right: 1px dashed rgba(141, 110, 99, 0.15);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Polaroid Zoom Zoomable Class */
+.zoomable {
+  cursor: pointer;
+  transition: transform var(--transition-normal), filter var(--transition-normal);
+}
+.zoomable:hover {
+  transform: scale(1.04);
+  filter: brightness(1.04);
+}
+
+/* Layout Custom Positions for Slots */
+.postcard__voucher-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 4px;
+}
+
+.postcard__voucher {
+  width: 100%;
+}
+
+.scrapbook-photo--slot1 {
+  width: 260px;
+  align-self: center;
+  flex-shrink: 0;
+}
+.scrapbook-photo--slot1 img {
+  width: 244px;
+  height: 170px;
+}
+
+.service-box--has-image {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.service-box__content-wrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.scrapbook-photo--slot2 {
+  width: 100%;
+  align-self: center;
+}
+.scrapbook-photo--slot2 img {
+  width: 100%;
+  height: 130px;
+}
+
+/* Timeline Activity Slots */
+.timeline-photo-container {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.scrapbook-photo--timeline {
+  width: 195px;
+}
+.scrapbook-photo--timeline img {
+  width: 179px;
+  height: 120px;
+}
+
+/* Pop Mart Mascot & Speech Bubble */
+.postcard__mascot {
+  position: absolute;
+  bottom: -20px;
+  right: -35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+.mascot-img {
+  width: 110px;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.18));
+  animation: mascotFloat 4s ease-in-out infinite alternate;
+}
+
+.mascot-speech-bubble {
+  background: #ffffff;
+  border: 2px solid #e2d7cb;
+  padding: 10px 16px; /* Enhanced padding to avoid text touching edges */
+  border-radius: 14px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #8d6e63;
+  max-width: 160px; /* Enhanced width */
+  text-align: center;
+  margin-bottom: 8px;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(100, 75, 50, 0.08);
+  line-height: 1.3;
+}
+
+.mascot-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 24px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #ffffff;
+}
+
+.mascot-speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  right: 23px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid #e2d7cb;
+  z-index: -1;
+}
+
+@keyframes mascotFloat {
+  0% { transform: translateY(0) rotate(1deg); }
+  100% { transform: translateY(-7px) rotate(-1deg); }
+}
+
+/* Lightbox Modal Overlays */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 11, 20, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.lightbox.lightbox--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 3rem;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.25s, transform 0.2s;
+  z-index: 10000;
+}
+
+.lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.08);
+}
+
+.lightbox__image {
+  max-width: 90%;
+  max-height: 85vh;
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+  transform: scale(0.9);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  object-fit: contain;
+}
+
+.lightbox.lightbox--active .lightbox__image {
+  transform: scale(1);
+}
+
+/* Responsive Overrides for Scrapbook */
+@media (max-width: 950px) {
+  .postcard__voucher-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .scrapbook-photo--slot1 {
+    width: 100%;
+    max-width: 280px;
+    align-self: center;
+    transform: rotate(0deg);
+  }
+  .scrapbook-photo--slot1 img {
+    width: 100%;
+    height: 180px;
+  }
+  
+  .postcard__mascot {
+    position: static;
+    margin-top: 20px;
+    width: 100%;
+    align-items: center;
+  }
+  
+  .mascot-speech-bubble {
+    max-width: 250px;
+  }
+  
+  .mascot-speech-bubble::after,
+  .mascot-speech-bubble::before {
+    display: none;
+  }
+}
+

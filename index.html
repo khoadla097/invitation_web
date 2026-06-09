@@ -92,6 +92,10 @@
     <!-- Screen 3: Victory Screen (Enriched Travel Brochure Postcard) -->
     <section id="victory-screen" class="screen">
       <div class="wood-panel victory-card">
+        <!-- Floral decorations -->
+        <div class="victory-card__flower victory-card__flower--top-left"></div>
+        <div class="victory-card__flower victory-card__flower--top-right"></div>
+
         <div class="victory-card__header">
           <div class="victory-card__badge">🏆</div>
           <h2 class="victory-card__title">CHỨNG NHẬN PHẦN THƯỞNG</h2>
@@ -111,23 +115,32 @@
           <div class="postcard__left">
             <h4 class="postcard__section-title">Chi Tiết Vé Thưởng</h4>
             
-            <!-- Basic Info / Voucher Block -->
-            <div class="postcard__voucher">
-              <div class="postcard__voucher-row">
-                <span class="voucher-label">📍 Địa điểm:</span>
-                <span class="voucher-value voucher-value--highlight">Phan Thiết - Mũi Né 🌴</span>
+            <!-- Basic Info / Voucher Block with Slot 1 Image -->
+            <div class="postcard__voucher-container">
+              <div class="postcard__voucher">
+                <div class="postcard__voucher-row">
+                  <span class="voucher-label">📍 Địa điểm:</span>
+                  <span class="voucher-value voucher-value--highlight">Phan Thiết - Mũi Né 🌴</span>
+                </div>
+                <div class="postcard__voucher-row">
+                  <span class="voucher-label">📅 Thời gian:</span>
+                  <span class="voucher-value">04-06/07/2026 (3 Ngày 2 Đêm - Dự định) 🏖️</span>
+                </div>
+                <div class="postcard__voucher-row">
+                  <span class="voucher-label">👥 Số lượng:</span>
+                  <span class="voucher-value voucher-value--highlight">2 Người (Combo trọn gói) 👫</span>
+                </div>
               </div>
-              <div class="postcard__voucher-row">
-                <span class="voucher-label">📅 Thời gian:</span>
-                <span class="voucher-value">04-06/07/2026 (3 Ngày 2 Đêm - Dự định) 🏖️</span>
-              </div>
-              <div class="postcard__voucher-row">
-                <span class="voucher-label">👥 Số lượng:</span>
-                <span class="voucher-value voucher-value--highlight">2 Người (Full combo trọn gói) 👫</span>
+              
+              <!-- Slot 1: Mũi Né Scenery -->
+              <div class="scrapbook-photo scrapbook-photo--slot1">
+                <div class="scrapbook-photo__tape"></div>
+                <img src="assets/images/mui_ne_scenery.png" class="zoomable" alt="Địa điểm Mũi Né">
+                <div class="scrapbook-photo__caption">Bãi biển Mũi Né 🌅</div>
               </div>
             </div>
 
-            <!-- Service Grid (Di chuyển & Lưu trú) -->
+            <!-- Service Grid (Di chuyển & Lưu trú) with Slot 2 Image -->
             <div class="postcard__services-grid">
               <div class="service-box">
                 <div class="service-box__icon">🚌</div>
@@ -136,11 +149,20 @@
                   <div class="service-box__desc">Xe Limousine đưa đón tận nơi từ Sài Gòn khứ hồi.</div>
                 </div>
               </div>
-              <div class="service-box">
-                <div class="service-box__icon">🏨</div>
-                <div class="service-box__content">
-                  <div class="service-box__title">Lưu trú</div>
-                  <div class="service-box__desc">Resort 4 sao sát biển, phòng Ocean View kèm buffet sáng miễn phí.</div>
+              
+              <div class="service-box service-box--has-image">
+                <div class="service-box__content-wrapper">
+                  <div class="service-box__icon">🏨</div>
+                  <div class="service-box__content">
+                    <div class="service-box__title">Lưu trú</div>
+                    <div class="service-box__desc">Resort 4 sao sát biển, phòng Ocean View kèm buffet sáng.</div>
+                  </div>
+                </div>
+                <!-- Slot 2: Ocean View Resort -->
+                <div class="scrapbook-photo scrapbook-photo--slot2">
+                  <div class="scrapbook-photo__tape"></div>
+                  <img src="assets/images/ocean_view_resort.png" class="zoomable" alt="Ocean View Resort">
+                  <div class="scrapbook-photo__caption">Resort Sát Biển 🏊‍♂️</div>
                 </div>
               </div>
             </div>
@@ -158,12 +180,28 @@
                 <div class="timeline-badge">N1</div>
                 <div class="timeline-content">
                   <p>Check-in Resort ➔ Ngắm hoàng hôn tại Làng Chài ➔ Tiệc hải sản bờ kè.</p>
+                  <!-- Slot 4: Seafood Feast -->
+                  <div class="timeline-photo-container">
+                    <div class="scrapbook-photo scrapbook-photo--timeline">
+                      <div class="scrapbook-photo__tape"></div>
+                      <img src="assets/images/seafood_feast.png" class="zoomable" alt="Tiệc hải sản bờ kè">
+                      <div class="scrapbook-photo__caption">Hải sản tươi ngon 🦞</div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="timeline-item">
                 <div class="timeline-badge">N2</div>
                 <div class="timeline-content">
                   <p>Đón bình minh Đồi Cát Trắng ➔ Trải nghiệm xe địa hình ATV ➔ BBQ lãng mạn bên bờ biển.</p>
+                  <!-- Slot 3: ATV Riding -->
+                  <div class="timeline-photo-container">
+                    <div class="scrapbook-photo scrapbook-photo--timeline">
+                      <div class="scrapbook-photo__tape"></div>
+                      <img src="assets/images/atv_riding.png" class="zoomable" alt="Trải nghiệm xe ATV">
+                      <div class="scrapbook-photo__caption">Vượt đồi cát ATV 🏎️</div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="timeline-item">
@@ -174,30 +212,18 @@
               </div>
             </div>
 
-            <!-- Stamp & Photo Collage Area -->
+            <!-- Stamp & Mascot Area -->
             <div class="postcard__footer">
-              <!-- Polaroid Photos Collage -->
-              <div class="polaroid-collage">
-                <div class="photo-polaroid photo-polaroid--1">
-                  <div class="photo-polaroid__image">
-                    <!-- Add real couple photos here later -->
-                    <span class="photo-placeholder-icon">📸</span>
-                  </div>
-                  <div class="photo-polaroid__caption">Phan Thiết Wave</div>
-                </div>
-                <div class="photo-polaroid photo-polaroid--2">
-                  <div class="photo-polaroid__image">
-                    <!-- Add real couple photos here later -->
-                    <span class="photo-placeholder-icon">🌅</span>
-                  </div>
-                  <div class="photo-polaroid__caption">Sunny Day 2026</div>
-                </div>
-              </div>
-
               <!-- Postage Stamp -->
               <div class="postcard__stamp">
                 <span class="stamp-emoji">⛵</span>
                 <div class="stamp-perforation"></div>
+              </div>
+              
+              <!-- Cute Mascot character -->
+              <div class="postcard__mascot">
+                <div class="mascot-speech-bubble">Chuyến đi này là dành cho tụi mình đó! ✨</div>
+                <img src="assets/images/blind_box_mascot.png" alt="Cute Mascot" class="mascot-img">
               </div>
             </div>
           </div>
@@ -221,6 +247,12 @@
   <!-- Audio Elements for BGM -->
   <audio id="bgm-gameplay" src="assets/sounds/gameplay.mp3" loop></audio>
   <audio id="bgm-victory" src="assets/sounds/victory.mp3"></audio>
+
+  <!-- Lightbox Modal Overlay -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox__close" aria-label="Đóng">&times;</button>
+    <img id="lightbox-img" class="lightbox__image" src="" alt="Hình ảnh phóng to">
+  </div>
 
   <!-- JS Scripts loaded at the end of the body -->
   <script src="src/js/game.js"></script>

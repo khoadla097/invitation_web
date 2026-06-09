@@ -12,16 +12,21 @@ A responsive and visually stunning mini-game web application built in Vietnamese
 |-- .gitignore
 |-- assets/
 |   |-- css/
-|   |   |-- style.css (Contains styling, layouts, Polaroid styling, themes, and fadeInUp keyframes)
+|   |   |-- style.css (Contains layout, themes, scrapbook photo rules, flower corners, and lightbox styles)
 |   |-- images/
-|   |   |-- pic_1.jpg (First Polaroid picture background)
-|   |   |-- pic_2.jpg (Second Polaroid picture background)
+|   |   |-- mui_ne_scenery.png (Mui Ne scenery photo - Slot 1)
+|   |   |-- ocean_view_resort.png (Resort swimming pool photo - Slot 2)
+|   |   |-- atv_riding.png (ATV sand dunes riding photo - Slot 3)
+|   |   |-- seafood_feast.png (Seafood dining photo - Slot 4)
+|   |   |-- blind_box_mascot.png (Pop Mart-style mascot character)
+|   |   |-- flower-top-left.png (Watercolour Dahlia & Delphinium left flourish)
+|   |   |-- flower-top-right.png (Watercolour Dahlia & Delphinium right flourish)
 |   |-- sounds/
 |   |   |-- gameplay.mp3 (BGM looping track during playing)
 |   |   |-- victory.mp3 (BGM track played upon winning)
 |-- src/
 |   |-- js/
-|   |   |-- main.js (Controls page flow, toggles body dark theme settings, binds timers/retry actions)
+|   |   |-- main.js (Controls page flow, toggles themes, handles lightbox clicks)
 |   |   |-- game.js (Coordinates card deck grids, clicks, matching checks, BGM, and sound FX)
 ```
 
@@ -29,19 +34,21 @@ A responsive and visually stunning mini-game web application built in Vietnamese
 
 ## Asset Setup Guide
 
-Before running the game, make sure to supply your custom media assets. To do this, place the target files in their respective directories using the exact names specified below:
+All media assets are pre-installed in `/assets/images/` and `/assets/sounds/`. To substitute them with your own personalized files, simply overwrite the respective files:
 
 ### 1. Audio Tracks
 Place these in `/assets/sounds/`:
 - **`gameplay.mp3`**: The background music track that loops continuously while matching cards.
 - **`victory.mp3`**: The celebratory background music track played once the game is successfully won.
 
-### 2. Postcard Images
+### 2. Scrapbook Images
 Place these in `/assets/images/`:
-- **`pic_1.jpg`**: Custom snapshot displayed inside the left Polaroid photo frame on the victory screen.
-- **`pic_2.jpg`**: Custom snapshot displayed inside the right Polaroid photo frame on the victory screen.
-
-*(Note: Dummy placeholder assets have been generated for you so the game can be evaluated immediately out of the box).*
+- **`mui_ne_scenery.png`**: Custom photo showing Mũi Né landscape (Slot 1).
+- **`ocean_view_resort.png`**: Custom photo showing resort beachfront/swimming pool (Slot 2).
+- **`atv_riding.png`**: Custom photo showing ATV riding on white dunes (Slot 3).
+- **`seafood_feast.png`**: Custom photo showing beach seafood feast (Slot 4).
+- **`blind_box_mascot.png`**: Cute mascot presenting the trip at the bottom-right corner.
+- **`flower-top-left.png` & `flower-top-right.png`**: Organic watercolor dahlia and delphinium corner graphics.
 
 ---
 
@@ -58,11 +65,14 @@ Place these in `/assets/images/`:
    - Removes the mahogany panel, fading in a warm sandy driftwood panel and a bright sun-and-wave sea visual background.
    - The victory postcard reveals itself using a smooth **1.2s reveal entry animation** (`fadeInUpReveal`).
    - Displays a structured, high-density travel brochure:
-     - **Voucher info**: Destination, date, guest counts.
-     - **Services block**: Detailed Limousine travel and 4-star ocean view resort information.
-     - **Itinerary Timeline**: Step-by-step Day 1, Day 2, and Day 3 tourist activities in Phan Thiet.
-     - **Mock Polaroid Gallery**: Rotated white border snapshots showing custom images.
-     - **Controls**: The Play Again buttons are removed on the victory page, concluding the vacation invitation sequence.
+      - **Voucher info**: Destination, date, guest counts. (Voucher label text wrapping is fixed with layout limits).
+      - **Services block**: Detailed Limousine travel and 4-star ocean view resort information with embedded Resort photo (Slot 2).
+      - **Itinerary Timeline**: Step-by-step Day 1, Day 2, and Day 3 tourist activities in Phan Thiet with activity photos (ATV riding - Slot 3, Seafood dining - Slot 4).
+      - **Organic Scrapbook styling**: Alternating rotated photo polaroid frames that tilt like hand-glued snapshots, and straighten/scale up on hover.
+      - **Floral Corner Flourishes**: Elegant watercolor corner illustrations of Dahlias (hoa thược dược) and Delphiniums (hoa phi yến) that blend borderlessly on the card using CSS `mix-blend-mode: multiply`.
+      - **Mascot figurine**: A cute beach Pop Mart/Art Toy mascot displaying the trip at the bottom-right corner with a well-padded speech bubble.
+      - **Interactive Lightbox Zoom**: Clicking any photo opens a high-resolution lightbox popup window to admire details. Closes via clicking background overlay or pressing `Escape`.
+      - **Controls**: The Play Again buttons are removed on the victory page, concluding the vacation invitation sequence.
 
 ---
 

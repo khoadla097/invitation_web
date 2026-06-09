@@ -138,3 +138,45 @@ nameInput.addEventListener("input", () => {
 
 resetBtn.addEventListener("click", handleResetGame);
 retryBtn.addEventListener("click", handleRetryGame);
+
+/**
+ * Vanilla JavaScript Lightbox Controller for Zoomable Reward Images.
+ */
+const initLightbox = () => {
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const closeBtn = lightbox.querySelector(".lightbox__close");
+  const zoomableImages = document.querySelectorAll(".zoomable");
+
+  zoomableImages.forEach((img) => {
+    img.addEventListener("click", () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add("lightbox--active");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("lightbox--active");
+    document.body.style.overflow = "";
+  };
+
+  closeBtn.addEventListener("click", closeLightbox);
+  lightbox.addEventListener("click", (e) => {
+    // Close lightbox if click is on backdrop, not on the image itself
+    if (e.target !== lightboxImg && e.target !== closeBtn) {
+      closeLightbox();
+    }
+  });
+
+  // Support Escape key to close the zoomed image
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("lightbox--active")) {
+      closeLightbox();
+    }
+  });
+};
+
+// Initialize on load
+initLightbox();
+
