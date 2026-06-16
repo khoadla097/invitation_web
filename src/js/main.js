@@ -180,3 +180,39 @@ const initLightbox = () => {
 // Initialize on load
 initLightbox();
 
+// Audio Integration and Autoplay Unlock
+const initAudioControls = () => {
+  // Sync visual state of mute widget with localStorage on load
+  if (window.AudioManager) {
+    window.AudioManager.updateUIWidget();
+  }
+
+  // Autoplay unlock helper
+  const unlockAudio = () => {
+    if (window.AudioManager) {
+      window.AudioManager.init();
+    }
+    // Remove listeners after initial unlock
+    document.removeEventListener("click", unlockAudio);
+    document.removeEventListener("keydown", unlockAudio);
+    document.removeEventListener("touchstart", unlockAudio);
+  };
+
+  document.addEventListener("click", unlockAudio);
+  document.addEventListener("keydown", unlockAudio);
+  document.addEventListener("touchstart", unlockAudio);
+
+  // Mute button click handler
+  const audioWidgetBtn = document.getElementById("audio-widget-btn");
+  if (audioWidgetBtn) {
+    audioWidgetBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (window.AudioManager) {
+        window.AudioManager.toggleMute();
+      }
+    });
+  }
+};
+
+initAudioControls();
+

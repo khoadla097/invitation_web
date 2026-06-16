@@ -1463,3 +1463,131 @@ body.theme-dark .card.is-matched .card__face--front {
   }
 }
 
+/* ==========================================================================
+   FLOATING AUDIO WIDGET STYLING
+   ========================================================================== */
+.audio-widget {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.audio-widget-btn {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: background var(--transition-normal), transform 0.2s, border-color var(--transition-normal);
+}
+
+.audio-widget-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.audio-widget-btn:active {
+  transform: scale(0.95);
+}
+
+/* Sound Wave Bars Animation */
+.audio-widget-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+}
+
+.audio-wave-bar {
+  display: inline-block;
+  width: 3px;
+  height: 100%;
+  background-color: #00acc1; /* Tropical cyan */
+  border-radius: 2px;
+  animation: bounceBar 0.8s ease-in-out infinite alternate;
+  transform-origin: bottom;
+}
+
+/* Different animation delay/duration for realistic equalizer look */
+.audio-wave-bar.bar-1 {
+  animation-duration: 0.6s;
+  animation-delay: 0.1s;
+}
+.audio-wave-bar.bar-2 {
+  animation-duration: 0.8s;
+  animation-delay: 0.3s;
+}
+.audio-wave-bar.bar-3 {
+  animation-duration: 0.5s;
+  animation-delay: 0.0s;
+}
+.audio-wave-bar.bar-4 {
+  animation-duration: 0.7s;
+  animation-delay: 0.2s;
+}
+
+@keyframes bounceBar {
+  0% {
+    transform: scaleY(0.2);
+  }
+  100% {
+    transform: scaleY(1.0);
+  }
+}
+
+.audio-widget-mute-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #eceff1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adapt styling in muted state */
+.audio-widget-btn.is-muted .audio-wave-bar {
+  animation-play-state: paused;
+}
+
+/* Make it adapt nicely in bright theme or different screens */
+body:not(.theme-dark) .audio-widget-btn {
+  background: rgba(0, 172, 193, 0.06);
+  border-color: rgba(0, 172, 193, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 172, 193, 0.1);
+}
+
+body:not(.theme-dark) .audio-widget-btn:hover {
+  background: rgba(0, 172, 193, 0.12);
+  border-color: rgba(0, 172, 193, 0.35);
+}
+
+body:not(.theme-dark) .audio-widget-mute-icon {
+  color: #37474f;
+}
+
+/* Hidden utility class */
+.hidden {
+  display: none !important;
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 650px) {
+  .audio-widget {
+    top: 12px;
+    right: 12px;
+  }
+  .audio-widget-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+

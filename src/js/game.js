@@ -37,9 +37,7 @@ class MemoryGame {
     this.timeLeft = this.totalDuration;
     this.timerInterval = null;
 
-    // BGM Audio track references
-    this.bgmGameplay = document.getElementById("bgm-gameplay");
-    this.bgmVictory = document.getElementById("bgm-victory");
+    // No direct BGM DOM references needed (managed by AudioManager)
 
     // Lazily initialized Web Audio API context for clicks pop sound
     this.audioCtx = null;
@@ -83,11 +81,8 @@ class MemoryGame {
     this.isLocked = false;
     this.timeLeft = this.totalDuration;
 
-    // Stop victory audio if it is playing
-    if (this.bgmVictory) {
-      this.bgmVictory.pause();
-      this.bgmVictory.currentTime = 0;
-    }
+    // Reset BGM back to ambient mode
+    this.startBGM("gameplay");
 
     // Trigger callbacks with starting values
     this.onMove(this.moves);
@@ -178,7 +173,11 @@ class MemoryGame {
     }
 
     // Play flip pop audio
-    this.playAudioEffect("flip");
+    if (window.AudioManager) {
+      window.AudioManager.playSFX("flip");
+    } else {
+      this.playAudioEffect("flip");
+    }
 
     // Flip card
     card.isFlipped = true;
@@ -230,6 +229,9 @@ class MemoryGame {
 
         // Use timeout to let the match transition finish
         setTimeout(() => {
+          if (window.AudioManager) {
+            window.AudioManager.playSFX("win");
+          }
           this.startBGM("victory");
           this.onWin();
         }, 600);
@@ -254,27 +256,11 @@ class MemoryGame {
    * @param {string} mode - The track to play: 'gameplay' or 'victory'.
    */
   startBGM(mode) {
-    if (mode === "gameplay") {
-      // Pause and reset victory track
-      if (this.bgmVictory) {
-        this.bgmVictory.pause();
-        this.bgmVictory.currentTime = 0;
-      }
-      // Play gameplay loop BGM
-      if (this.bgmGameplay) {
-        this.bgmGameplay.currentTime = 0;
-        this.bgmGameplay.play().catch(e => console.log("Gameplay BGM start blocked by browser policy:", e));
-      }
-    } else if (mode === "victory") {
-      // Pause and reset gameplay track
-      if (this.bgmGameplay) {
-        this.bgmGameplay.pause();
-        this.bgmGameplay.currentTime = 0;
-      }
-      // Play victory track BGM
-      if (this.bgmVictory) {
-        this.bgmVictory.currentTime = 0;
-        this.bgmVictory.play().catch(e => console.log("Victory BGM start blocked by browser policy:", e));
+    if (window.AudioManager) {
+      if (mode === "gameplay") {
+        window.AudioManager.crossfadeBGM("ambient");
+      } else if (mode === "victory") {
+        window.AudioManager.crossfadeBGM("romantic");
       }
     }
   }
@@ -283,13 +269,8 @@ class MemoryGame {
    * Stops both background music loops.
    */
   stopBGM() {
-    if (this.bgmGameplay) {
-      this.bgmGameplay.pause();
-      this.bgmGameplay.currentTime = 0;
-    }
-    if (this.bgmVictory) {
-      this.bgmVictory.pause();
-      this.bgmVictory.currentTime = 0;
+    if (window.AudioManager) {
+      window.AudioManager.stopAll();
     }
   }
 

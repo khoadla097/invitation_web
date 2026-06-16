@@ -22,12 +22,15 @@ A responsive and visually stunning mini-game web application built in Vietnamese
 |   |   |-- flower-top-left.png (Watercolour Dahlia & Delphinium left flourish)
 |   |   |-- flower-top-right.png (Watercolour Dahlia & Delphinium right flourish)
 |   |-- sounds/
-|   |   |-- gameplay.mp3 (BGM looping track during playing)
-|   |   |-- victory.mp3 (BGM track played upon winning)
+|   |   |-- bgm-ambient.mp3 (Continuous looping BGM from welcome screen to gameplay)
+|   |   |-- bgm-romantic.mp3 (Continuous looping romantic BGM on victory screen)
+|   |   |-- sfx-card-flip.mp3 (Event-driven sound effect played on card click)
+|   |   |-- sfx-win-chime.mp3 (Event-driven chime played once when victory is reached)
 |-- src/
 |   |-- js/
-|   |   |-- main.js (Controls page flow, toggles themes, handles lightbox clicks)
-|   |   |-- game.js (Coordinates card deck grids, clicks, matching checks, BGM, and sound FX)
+|   |   |-- audio.js (Web Audio API Manager for looping BGMs, crossfades, and mute toggle)
+|   |   |-- main.js (Controls page flow, toggles themes, handles lightbox clicks, and triggers audio unlock)
+|   |   |-- game.js (Coordinates card deck grids, clicks, matching checks, SFX triggers, and game flow)
 ```
 
 ---
@@ -38,8 +41,10 @@ All media assets are pre-installed in `/assets/images/` and `/assets/sounds/`. T
 
 ### 1. Audio Tracks
 Place these in `/assets/sounds/`:
-- **`gameplay.mp3`**: The background music track that loops continuously while matching cards.
-- **`victory.mp3`**: The celebratory background music track played once the game is successfully won.
+- **`bgm-ambient.mp3`**: The ambient background music track that loops continuously during Welcome and Gameplay screens.
+- **`bgm-romantic.mp3`**: The romantic background music track that loops continuously during the Victory screen.
+- **`sfx-card-flip.mp3`**: Short event-driven sound effect triggered on every card flip.
+- **`sfx-win-chime.mp3`**: Short celebratory chime triggered exactly once when the victory condition is met.
 
 ### 2. Scrapbook Images
 Place these in `/assets/images/`:
@@ -58,10 +63,10 @@ Place these in `/assets/images/`:
 2. **Focus Mode (Dark Theme):**
    - Switching to the board dims the screen, styling the container as dark mahogany wood boards. This focus-oriented theme helps you concentrate on solving matches.
    - **Countdown Timer:** You have **30 seconds** to match all 4 card pairs. A visual progress bar at the top displays the remaining time, turning red and flashing when you fall below 10 seconds.
-   - **Card Clicks Sound FX:** Uses browser-native Web Audio pop synthesizers to click-pop when a card is selected.
+   - **Card Clicks Sound FX:** Plays `sfx-card-flip.mp3` (with a browser-native Web Audio pop synthesizer as fallback) when a card is selected.
    - **Lose Condition:** If the timer reaches 0, the board locks and redirects to the **Game Over** screen with a `"Chơi lại"` button to retry.
 3. **Victory Brochure (Bright Tropical Theme):**
-   - Instantly stops gameplay BGM, resets its playtime, and plays the victory arpeggio tracks.
+   - Plays the celebratory `sfx-win-chime.mp3` once, and smoothly crossfades BGM from `bgm-ambient` to `bgm-romantic` over 1.5 seconds.
    - Removes the mahogany panel, fading in a warm sandy driftwood panel and a bright sun-and-wave sea visual background.
    - The victory postcard reveals itself using a smooth **1.2s reveal entry animation** (`fadeInUpReveal`).
    - Displays a structured, high-density travel brochure:

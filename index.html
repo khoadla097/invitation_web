@@ -19,6 +19,19 @@
     <div class="sea-wave sea-wave--2"></div>
   </div>
 
+  <!-- Floating Audio Widget -->
+  <div id="audio-widget" class="audio-widget">
+    <button id="audio-widget-btn" class="audio-widget-btn" aria-label="Bật/Tắt âm thanh" title="Âm thanh">
+      <div class="audio-widget-wave">
+        <span class="audio-wave-bar bar-1"></span>
+        <span class="audio-wave-bar bar-2"></span>
+        <span class="audio-wave-bar bar-3"></span>
+        <span class="audio-wave-bar bar-4"></span>
+      </div>
+      <span class="audio-widget-mute-icon hidden">🔇</span>
+    </button>
+  </div>
+
   <main class="app-container">
     <!-- Screen 1: Welcome Screen -->
     <section id="welcome-screen" class="screen screen--active">
@@ -244,9 +257,11 @@
     </section>
   </main>
 
-  <!-- Audio Elements for BGM -->
-  <audio id="bgm-gameplay" src="assets/sounds/gameplay.mp3" loop></audio>
-  <audio id="bgm-victory" src="assets/sounds/victory.mp3"></audio>
+  <!-- Audio Elements for BGM & SFX -->
+  <audio id="bgm-ambient" src="assets/sounds/bgm-ambient.mp3" loop></audio>
+  <audio id="bgm-romantic" src="assets/sounds/bgm-romantic.mp3" loop></audio>
+  <audio id="sfx-card-flip" src="assets/sounds/sfx-card-flip.mp3"></audio>
+  <audio id="sfx-win-chime" src="assets/sounds/sfx-win-chime.mp3"></audio>
 
   <!-- Lightbox Modal Overlay -->
   <div id="lightbox" class="lightbox">
@@ -255,6 +270,7 @@
   </div>
 
   <!-- JS Scripts loaded at the end of the body -->
+  <script src="src/js/audio.js"></script>
   <script src="src/js/game.js"></script>
   <script src="src/js/main.js"></script>
 </body>
